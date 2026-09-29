@@ -1,48 +1,64 @@
 # Hotel Antemurale – web stranica
 
-Statička web stranica (HTML, CSS, JavaScript) za integralni hotel Antemurale.
-Nema build koraka ni ovisnosti – dovoljno je otvoriti `index.html` u pregledniku.
+Web stranica integralnog hotela Antemurale (Rastovača 13, Plitvička Jezera),
+napravljena u **Reactu** s alatom **Vite**. Stranica je dvojezična (HR / EN).
+
+## Pokretanje
+
+Potreban je [Node.js](https://nodejs.org/) 20 ili noviji.
+
+```bash
+npm install      # jednom, instalira pakete
+npm run dev      # razvojni poslužitelj na http://localhost:5173
+npm run build    # gotova stranica za objavu u mapi dist/
+npm run preview  # pregled gotove (build) verzije
+```
 
 ## Struktura
 
 ```
-index.html        – sav sadržaj stranice (na hrvatskom)
-css/style.css     – izgled
-js/main.js        – izbornik, HR/EN prijevod, obrazac za upit
-images/           – fotografije i favicon
+index.html              – HTML ljuska (naslov, opis za Google)
+src/content.js          – SAV TEKST stranice (HR i EN), kontakt, cijene, adresa za kartu
+src/components/         – React komponente, jedna po sekciji
+src/i18n.jsx            – odabir jezika (pamti se u pregledniku)
+src/index.css           – izgled
+public/                 – favicon i fotografije (public/images/)
 ```
 
-## Sekcije
+Sekcije: Početna · O nama · Smještaj · Naše kuće · Usluge · Galerija · Lokacija (s kartom) · Rezervacija · Podnožje
 
-Početna (hero) · O nama · Smještaj · Naše kuće · Usluge · Galerija · Lokacija · Rezervacija (obrazac za upit) · Podnožje
+## Karta
 
-Stranica je dvojezična (HR / EN). Hrvatski tekst nalazi se u `index.html`,
-a engleski u objektu `EN` u `js/main.js` – ključ `data-i18n` povezuje ih.
+Sekcija *Lokacija* prikazuje Google kartu za adresu **Rastovača 13, Plitvička Jezera**
+(konstanta `MAP_QUERY` u `src/content.js`) i gumb *Upute za dolazak* koji otvara
+navigaciju u Google Maps. Za kartu nije potreban API ključ.
 
 ## Što treba zamijeniti pravim podacima
 
-- [ ] **Kontakt**: telefon, e-pošta i adresa (`index.html` – sekcija *Rezervacija* i podnožje)
-- [ ] **E-pošta za upite**: konstanta `BOOKING_EMAIL` u `js/main.js`
-- [ ] **Kuće**: nazivi, adrese i broj jedinica (sekcija *Naše kuće*)
-- [ ] **Smještaj**: vrste soba, kvadrature i cijene
-- [ ] **Udaljenosti** u sekciji *Lokacija*
-- [ ] **Karta**: `src` iframea u sekciji *Lokacija* (Google Maps → Podijeli → Ugradi kartu)
+Većina podataka nalazi se u `src/content.js`:
+
+- [ ] **Kontakt** (`CONTACT`): telefon, e-pošta, poštanski broj, Instagram, Facebook
+- [ ] **Cijene** (`PRICES`), vrste soba i kvadrature
+- [ ] **Kuće**: nazivi, broj jedinica i adrese
+- [ ] **Udaljenosti** u sekciji *Lokacija* (upisane su približne vrijednosti – provjerite ih)
 - [ ] **Fotografije**:
-  - hero: u `css/style.css` (`.hero`) otkomentirajte `background: url("../images/hero.jpg") ...`
-  - sobe: zamijenite `<div class="card-img ph ...">` s `<img class="card-img" src="images/soba.jpg" alt="...">`
-  - galerija: zamijenite `<div class="ph ...">` s `<img src="images/..." alt="..." loading="lazy">`
-- [ ] **Društvene mreže**: linkovi na Instagram / Facebook u podnožju
-- [ ] Nakon promjene hrvatskog teksta ažurirajte i engleski prijevod u `js/main.js`
+  - stavite ih u `public/images/`
+  - galerija: popis `PHOTOS` u `src/components/Gallery.jsx`
+  - sobe: `src/components/Rooms.jsx` (komentar pokazuje kako)
+  - naslovna: u `src/index.css` (`.hero`) postavite `background: url("/images/hero.jpg") center / cover;`
+
+Pri svakoj promjeni teksta ažurirajte i hrvatsku (`hr`) i englesku (`en`) verziju.
 
 ## Obrazac za upit
 
 Obrazac provjerava podatke i otvara gostov program za e-poštu s pripremljenom porukom
-(`mailto:`), pa ne treba poslužitelj. Za slanje izravno s stranice može se koristiti
-servis poput Formspree ili Netlify Forms, ili povezati booking engine (npr. rezervacijski
-sustav vašeg channel managera).
+(`mailto:`), pa ne treba poslužitelj. Za slanje izravno sa stranice može se povezati
+Formspree, Netlify Forms ili vaš sustav za rezervacije.
 
 ## Objava
 
-Najjednostavnije besplatno: **GitHub Pages** – u postavkama repozitorija
-*Settings → Pages* odaberite granu i korijenski direktorij. Radi i na Netlify,
-Cloudflare Pages ili bilo kojem web hostingu (samo prenesite datoteke).
+- **GitHub Pages**: priložen je workflow `.github/workflows/deploy.yml` koji pri svakom
+  pushu na granu `main` izgradi i objavi stranicu. U repozitoriju uključite
+  *Settings → Pages → Source: GitHub Actions*.
+- **Netlify / Cloudflare Pages / Vercel**: build naredba `npm run build`, izlazna mapa `dist`.
+- **Klasični hosting**: pokrenite `npm run build` i prenesite sadržaj mape `dist/`.
