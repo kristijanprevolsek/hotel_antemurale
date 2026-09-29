@@ -1,0 +1,379 @@
+/* ===== Hotel Antemurale – stilovi ===== */
+
+:root {
+  --stone: #f5f0e8;
+  --stone-dark: #e9e1d3;
+  --ink: #2b2622;
+  --ink-soft: #5d554d;
+  --sea: #1f4e5f;
+  --sea-dark: #163844;
+  --terracotta: #b5623b;
+  --terracotta-dark: #974e2d;
+  --white: #fff;
+  --radius: 10px;
+  --shadow: 0 10px 30px rgba(43, 38, 34, .08);
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --header-h: 72px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--stone);
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+a { color: var(--sea); }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0 0 .5em;
+}
+h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); }
+h2 { font-size: clamp(2rem, 4vw, 3rem); }
+h3 { font-size: 1.5rem; }
+
+.container { width: min(1160px, 100% - 32px); margin-inline: auto; }
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--terracotta);
+  margin: 0 0 .75rem;
+}
+
+.lead { font-size: 1.15rem; }
+
+/* ----- Gumbi ----- */
+.btn {
+  display: inline-block;
+  padding: .85rem 1.6rem;
+  border: 2px solid var(--terracotta);
+  border-radius: 999px;
+  background: var(--terracotta);
+  color: var(--white);
+  font: 600 .95rem var(--font-sans);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, color .2s;
+}
+.btn:hover { background: var(--terracotta-dark); border-color: var(--terracotta-dark); }
+.btn-ghost { background: transparent; border-color: var(--white); }
+.btn-ghost:hover { background: var(--white); border-color: var(--white); color: var(--ink); }
+.btn-small { padding: .5rem 1.1rem; font-size: .85rem; }
+
+/* ----- Zaglavlje ----- */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 100;
+  height: var(--header-h);
+  background: transparent;
+  transition: background .3s, box-shadow .3s;
+}
+.site-header.scrolled {
+  background: rgba(245, 240, 232, .97);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .06);
+}
+.nav-wrap { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+
+.logo { display: flex; align-items: center; gap: .7rem; text-decoration: none; color: var(--white); }
+.site-header.scrolled .logo { color: var(--ink); }
+.logo-mark {
+  display: grid; place-items: center;
+  width: 42px; height: 42px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  font: 700 1.4rem var(--font-serif);
+}
+.logo-text { font: 600 1.5rem/1 var(--font-serif); display: flex; flex-direction: column; }
+.logo-text small {
+  font: 500 .62rem var(--font-sans);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  margin-top: .3rem;
+  opacity: .8;
+}
+
+.main-nav { display: flex; align-items: center; gap: 1.5rem; }
+.main-nav > a:not(.btn) {
+  color: var(--white);
+  text-decoration: none;
+  font-size: .9rem;
+  font-weight: 500;
+}
+.site-header.scrolled .main-nav > a:not(.btn) { color: var(--ink); }
+.main-nav > a:not(.btn):hover { color: var(--terracotta); }
+
+.lang-switch { display: flex; border: 1px solid rgba(255, 255, 255, .6); border-radius: 999px; overflow: hidden; }
+.site-header.scrolled .lang-switch { border-color: var(--stone-dark); }
+.lang-switch button {
+  background: none; border: 0;
+  padding: .3rem .6rem;
+  font: 600 .75rem var(--font-sans);
+  color: var(--white);
+  cursor: pointer;
+}
+.site-header.scrolled .lang-switch button { color: var(--ink-soft); }
+.lang-switch button.active { background: var(--white); color: var(--ink); }
+.site-header.scrolled .lang-switch button.active { background: var(--sea); color: var(--white); }
+
+.nav-toggle { display: none; background: none; border: 0; padding: .5rem; cursor: pointer; }
+.nav-toggle span { display: block; width: 24px; height: 2px; margin: 5px 0; background: var(--white); transition: transform .3s, opacity .3s; }
+.site-header.scrolled .nav-toggle span { background: var(--ink); }
+
+/* ----- Hero ----- */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  color: var(--white);
+  /* Zamijenite pozadinu vlastitom fotografijom:
+     background: url("../images/hero.jpg") center / cover no-repeat; */
+  background:
+    radial-gradient(ellipse at 70% 20%, rgba(255, 214, 170, .35), transparent 60%),
+    linear-gradient(160deg, #3b6a79 0%, #1f4e5f 45%, #7a4a33 100%);
+}
+.hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.45)); }
+.hero-content { position: relative; max-width: 760px; padding-top: var(--header-h); }
+.hero .eyebrow { color: #f3c9a8; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+
+/* ----- Sekcije ----- */
+.section { padding: clamp(4rem, 10vw, 7rem) 0; }
+.section-alt { background: var(--white); }
+.section-dark { background: var(--sea-dark); color: #e8eef0; }
+.section-dark .eyebrow { color: #f3c9a8; }
+.section-head { max-width: 640px; margin-bottom: 3rem; }
+
+.split { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(2rem, 6vw, 5rem); align-items: start; }
+
+/* O nama */
+.highlights { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+.highlights li {
+  background: var(--white);
+  padding: 1.4rem 1.6rem;
+  border-left: 3px solid var(--terracotta);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.highlights strong { display: block; font: 600 1.3rem var(--font-serif); }
+.highlights span { color: var(--ink-soft); }
+
+/* Placeholder slike – zamijenite pravim fotografijama */
+.ph { background-color: var(--stone-dark); }
+.ph-1 { background: linear-gradient(135deg, #d8c3a5, #a67c52); }
+.ph-2 { background: linear-gradient(135deg, #9fb8c1, #1f4e5f); }
+.ph-3 { background: linear-gradient(135deg, #e3b58f, #b5623b); }
+.ph-4 { background: linear-gradient(135deg, #c9c1b3, #6f665b); }
+.ph-5 { background: linear-gradient(135deg, #b9cfc4, #4f7564); }
+.ph-6 { background: linear-gradient(135deg, #efd9b4, #c08a4a); }
+
+/* Kartice smještaja */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; }
+.card {
+  background: var(--stone);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform .25s, box-shadow .25s;
+}
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.card-img { aspect-ratio: 4 / 3; background-size: cover; background-position: center; }
+.card-body { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
+.card-body p { margin: 0 0 1rem; }
+.meta { color: var(--ink-soft); font-size: .88rem; }
+.card .meta { margin-bottom: .75rem; }
+.price { margin-top: auto !important; color: var(--ink-soft); }
+.price strong { font: 700 1.5rem var(--font-serif); color: var(--sea); }
+
+.amenities {
+  list-style: none;
+  padding: 0;
+  margin: 3rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  justify-content: center;
+}
+.amenities li {
+  padding: .45rem 1rem;
+  border: 1px solid var(--stone-dark);
+  border-radius: 999px;
+  font-size: .88rem;
+  color: var(--ink-soft);
+}
+
+/* Kuće */
+.houses {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+.house {
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+  background: var(--white);
+  padding: 1.6rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.house h3 { margin-bottom: .25rem; }
+.house p { margin: 0 0 .25rem; }
+.house-num {
+  flex: none;
+  display: grid; place-items: center;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--sea);
+  color: var(--white);
+  font: 700 1.2rem var(--font-serif);
+}
+.house-reception .house-num { background: var(--terracotta); }
+
+/* Usluge */
+.services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem 2.5rem; }
+.service .icon { font-size: 1.8rem; display: block; margin-bottom: .6rem; }
+.service h3 { color: var(--white); }
+.service p { margin: 0; color: #b8c7cc; }
+
+/* Galerija */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 220px;
+  gap: 1rem;
+}
+.gallery > * { border-radius: var(--radius); width: 100%; height: 100%; object-fit: cover; }
+.g-wide { grid-column: span 2; }
+
+/* Lokacija */
+.distances { list-style: none; padding: 0; margin: 2rem 0 0; }
+.distances li {
+  display: flex;
+  justify-content: space-between;
+  padding: .75rem 0;
+  border-bottom: 1px solid var(--stone-dark);
+}
+.map { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); min-height: 380px; }
+.map iframe { width: 100%; height: 100%; min-height: 380px; border: 0; display: block; }
+
+/* Rezervacija */
+.contact-list { list-style: none; padding: 0; margin: 2rem 0 0; }
+.contact-list li { display: flex; flex-direction: column; margin-bottom: 1rem; }
+.contact-list li > span:first-child {
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--ink-soft);
+}
+.contact-list a { font-weight: 600; text-decoration: none; }
+
+.booking-form {
+  background: var(--white);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 1rem;
+}
+.booking-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.booking-form label { display: flex; flex-direction: column; gap: .35rem; font-size: .85rem; font-weight: 500; }
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+  font: inherit;
+  font-size: 1rem;
+  padding: .7rem .85rem;
+  border: 1px solid var(--stone-dark);
+  border-radius: 8px;
+  background: var(--stone);
+  color: var(--ink);
+  min-width: 0;
+}
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus { outline: 2px solid var(--sea); outline-offset: 1px; background: var(--white); }
+.booking-form .invalid { border-color: #c0392b; }
+.form-error { margin: 0; color: #c0392b; font-size: .9rem; }
+.form-note { margin: 0; font-size: .8rem; color: var(--ink-soft); }
+
+/* Podnožje */
+.site-footer { background: var(--ink); color: #cfc6bb; padding: 4rem 0 1.5rem; font-size: .92rem; }
+.site-footer a { color: #cfc6bb; }
+.site-footer a:hover { color: var(--white); }
+.site-footer h4 { color: var(--white); font-size: 1.2rem; }
+.footer-logo { color: var(--white); margin: 0 0 1rem; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; }
+.footer-bottom { border-top: 1px solid rgba(255, 255, 255, .1); margin-top: 2.5rem; padding-top: 1.5rem; font-size: .8rem; }
+
+/* Animacija pojavljivanja */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ----- Responzivnost ----- */
+@media (max-width: 980px) {
+  .nav-toggle { display: block; }
+  .main-nav {
+    position: fixed;
+    top: var(--header-h);
+    left: 0; right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.1rem;
+    padding: 1.5rem 16px 2rem;
+    background: var(--stone);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .08);
+    transform: translateY(-120%);
+    visibility: hidden;
+    transition: transform .3s, visibility .3s;
+  }
+  .main-nav.open { transform: none; visibility: visible; }
+  .main-nav > a:not(.btn) { color: var(--ink) !important; font-size: 1.05rem; }
+  .lang-switch { border-color: var(--stone-dark) !important; }
+  .lang-switch button { color: var(--ink-soft) !important; }
+  .lang-switch button.active { background: var(--sea) !important; color: var(--white) !important; }
+  .site-header.menu-open { background: var(--stone); }
+  .site-header.menu-open .logo { color: var(--ink); }
+  .site-header.menu-open .nav-toggle span { background: var(--ink); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .split { grid-template-columns: 1fr; }
+  .cards { grid-template-columns: 1fr 1fr; }
+  .services { grid-template-columns: 1fr 1fr; }
+  .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; }
+}
+
+@media (max-width: 640px) {
+  .cards, .houses, .services { grid-template-columns: 1fr; }
+  .booking-form .row { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .gallery { grid-auto-rows: 140px; }
+}

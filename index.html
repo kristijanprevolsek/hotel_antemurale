@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel Antemurale – integralni hotel</title>
+  <meta name="description" content="Hotel Antemurale – integralni hotel u srcu starog grada. Sobe i apartmani u obnovljenim povijesnim kućama, jedna recepcija, hotelska usluga.">
+  <meta property="og:title" content="Hotel Antemurale – integralni hotel">
+  <meta property="og:description" content="Sobe i apartmani u obnovljenim povijesnim kućama starog grada.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===== ZAGLAVLJE / NAVIGACIJA ===== -->
+  <header class="site-header" id="top">
+    <div class="container nav-wrap">
+      <a href="#top" class="logo" aria-label="Hotel Antemurale – početna">
+        <span class="logo-mark">A</span>
+        <span class="logo-text">Antemurale<small data-i18n="logo.sub">integralni hotel</small></span>
+      </a>
+
+      <button class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Izbornik">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav id="main-nav" class="main-nav">
+        <a href="#o-nama" data-i18n="nav.about">O nama</a>
+        <a href="#smjestaj" data-i18n="nav.rooms">Smještaj</a>
+        <a href="#kuce" data-i18n="nav.houses">Naše kuće</a>
+        <a href="#usluge" data-i18n="nav.services">Usluge</a>
+        <a href="#galerija" data-i18n="nav.gallery">Galerija</a>
+        <a href="#lokacija" data-i18n="nav.location">Lokacija</a>
+        <a href="#rezervacija" class="btn btn-small" data-i18n="nav.book">Rezervirajte</a>
+        <div class="lang-switch" role="group" aria-label="Jezik / Language">
+          <button type="button" data-lang="hr" class="active">HR</button>
+          <button type="button" data-lang="en">EN</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <div class="hero-overlay"></div>
+      <div class="container hero-content">
+        <p class="eyebrow" data-i18n="hero.eyebrow">Integralni hotel u starom gradu</p>
+        <h1 data-i18n="hero.title">Cijeli stari grad je vaš hotel</h1>
+        <p class="lead" data-i18n="hero.lead">Sobe i apartmani u pažljivo obnovljenim kamenim kućama, povezani jednom recepcijom i hotelskom uslugom.</p>
+        <div class="hero-actions">
+          <a href="#rezervacija" class="btn" data-i18n="hero.cta1">Pošaljite upit</a>
+          <a href="#smjestaj" class="btn btn-ghost" data-i18n="hero.cta2">Pogledajte smještaj</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== O NAMA ===== -->
+    <section id="o-nama" class="section">
+      <div class="container split">
+        <div>
+          <p class="eyebrow" data-i18n="about.eyebrow">O nama</p>
+          <h2 data-i18n="about.title">Hotel koji živi s gradom</h2>
+          <p data-i18n="about.p1">Hotel Antemurale je integralni hotel – umjesto jedne zgrade, naše sobe i apartmani smješteni su u nekoliko obnovljenih povijesnih kuća raspoređenih po starom gradu. Tako boravite među lokalnim stanovnicima, u autentičnom ambijentu, a i dalje uživate u svim pogodnostima hotela.</p>
+          <p data-i18n="about.p2">Središnja recepcija brine o vašem dolasku, ključevima, doručku, čišćenju i svim željama – od preporuka za restorane do organizacije izleta.</p>
+        </div>
+        <ul class="highlights">
+          <li><strong data-i18n="about.h1.t">Autentičan smještaj</strong><span data-i18n="about.h1.d">Kamene kuće, drvene grede i pogled na krovove starog grada.</span></li>
+          <li><strong data-i18n="about.h2.t">Hotelska usluga</strong><span data-i18n="about.h2.d">Recepcija, doručak, dnevno čišćenje i prijenos prtljage.</span></li>
+          <li><strong data-i18n="about.h3.t">Održivi turizam</strong><span data-i18n="about.h3.d">Obnavljamo postojeće zgrade i čuvamo život u povijesnoj jezgri.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== SMJEŠTAJ ===== -->
+    <section id="smjestaj" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-i18n="rooms.eyebrow">Smještaj</p>
+          <h2 data-i18n="rooms.title">Sobe i apartmani</h2>
+          <p data-i18n="rooms.lead">Svaka jedinica je jedinstvena – prilagođena arhitekturi kuće u kojoj se nalazi.</p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <div class="card-img ph ph-1" role="img" aria-label="Dvokrevetna soba"></div>
+            <div class="card-body">
+              <h3 data-i18n="rooms.r1.t">Dvokrevetna soba</h3>
+              <p class="meta" data-i18n="rooms.r1.m">2 osobe · 18–22 m²</p>
+              <p data-i18n="rooms.r1.d">Udobna soba s bračnim ili odvojenim krevetima, vlastitom kupaonicom i pogledom na kamene ulice.</p>
+              <p class="price"><span data-i18n="rooms.from">od</span> <strong>€ 90</strong> / <span data-i18n="rooms.night">noć</span></p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img ph ph-2" role="img" aria-label="Superior soba"></div>
+            <div class="card-body">
+              <h3 data-i18n="rooms.r2.t">Superior soba</h3>
+              <p class="meta" data-i18n="rooms.r2.m">2–3 osobe · 25–30 m²</p>
+              <p data-i18n="rooms.r2.d">Prostranija soba s dnevnim kutkom, originalnim kamenim zidovima i pogledom na more ili trg.</p>
+              <p class="price"><span data-i18n="rooms.from">od</span> <strong>€ 120</strong> / <span data-i18n="rooms.night">noć</span></p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img ph ph-3" role="img" aria-label="Apartman"></div>
+            <div class="card-body">
+              <h3 data-i18n="rooms.r3.t">Apartman</h3>
+              <p class="meta" data-i18n="rooms.r3.m">2–4 osobe · 40–55 m²</p>
+              <p data-i18n="rooms.r3.d">Zasebna spavaća soba, dnevni boravak i čajna kuhinja – idealno za obitelji i duže boravke.</p>
+              <p class="price"><span data-i18n="rooms.from">od</span> <strong>€ 160</strong> / <span data-i18n="rooms.night">noć</span></p>
+            </div>
+          </article>
+        </div>
+
+        <ul class="amenities">
+          <li data-i18n="am.1">Klima uređaj</li>
+          <li data-i18n="am.2">Besplatan Wi-Fi</li>
+          <li data-i18n="am.3">Smart TV</li>
+          <li data-i18n="am.4">Minibar</li>
+          <li data-i18n="am.5">Sef</li>
+          <li data-i18n="am.6">Sušilo za kosu</li>
+          <li data-i18n="am.7">Kozmetika</li>
+          <li data-i18n="am.8">Aparat za kavu</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== NAŠE KUĆE ===== -->
+    <section id="kuce" class="section">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-i18n="houses.eyebrow">Naše kuće</p>
+          <h2 data-i18n="houses.title">Jedan hotel, više adresa</h2>
+          <p data-i18n="houses.lead">Sve kuće udaljene su najviše nekoliko minuta hoda od recepcije.</p>
+        </div>
+
+        <ol class="houses">
+          <li class="house house-reception">
+            <span class="house-num">R</span>
+            <div>
+              <h3 data-i18n="houses.rec.t">Recepcija i doručak</h3>
+              <p data-i18n="houses.rec.d">Središnja točka hotela: prijava, ključevi, informacije i doručak.</p>
+              <p class="meta"><span data-i18n="houses.addr">Adresa</span>: Glavna ulica 1</p>
+            </div>
+          </li>
+          <li class="house">
+            <span class="house-num">1</span>
+            <div>
+              <h3 data-i18n="houses.h1.t">Kuća na trgu</h3>
+              <p data-i18n="houses.h1.d">4 dvokrevetne sobe · 1 min hoda od recepcije</p>
+              <p class="meta"><span data-i18n="houses.addr">Adresa</span>: Trg 3</p>
+            </div>
+          </li>
+          <li class="house">
+            <span class="house-num">2</span>
+            <div>
+              <h3 data-i18n="houses.h2.t">Kuća uz zidine</h3>
+              <p data-i18n="houses.h2.d">3 superior sobe · 3 min hoda od recepcije</p>
+              <p class="meta"><span data-i18n="houses.addr">Adresa</span>: Ulica uz zidine 7</p>
+            </div>
+          </li>
+          <li class="house">
+            <span class="house-num">3</span>
+            <div>
+              <h3 data-i18n="houses.h3.t">Kuća s vrtom</h3>
+              <p data-i18n="houses.h3.d">2 apartmana · 4 min hoda od recepcije</p>
+              <p class="meta"><span data-i18n="houses.addr">Adresa</span>: Vrtna ulica 12</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== USLUGE ===== -->
+    <section id="usluge" class="section section-dark">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-i18n="services.eyebrow">Usluge</p>
+          <h2 data-i18n="services.title">Sve što očekujete od hotela</h2>
+        </div>
+        <div class="services">
+          <div class="service"><span class="icon" aria-hidden="true">☕</span><h3 data-i18n="sv.1.t">Doručak</h3><p data-i18n="sv.1.d">Svježi domaći doručak s lokalnim namirnicama svako jutro.</p></div>
+          <div class="service"><span class="icon" aria-hidden="true">🛎</span><h3 data-i18n="sv.2.t">Recepcija</h3><p data-i18n="sv.2.d">Osoblje na raspolaganju za prijavu, savjete i pomoć.</p></div>
+          <div class="service"><span class="icon" aria-hidden="true">🧳</span><h3 data-i18n="sv.3.t">Prijenos prtljage</h3><p data-i18n="sv.3.d">Vašu prtljagu dostavljamo do sobe.</p></div>
+          <div class="service"><span class="icon" aria-hidden="true">🧹</span><h3 data-i18n="sv.4.t">Dnevno čišćenje</h3><p data-i18n="sv.4.d">Uredne sobe i svježi ručnici svaki dan.</p></div>
+          <div class="service"><span class="icon" aria-hidden="true">🚐</span><h3 data-i18n="sv.5.t">Transferi i izleti</h3><p data-i18n="sv.5.d">Organiziramo transfere, izlete i vođene ture.</p></div>
+          <div class="service"><span class="icon" aria-hidden="true">🅿</span><h3 data-i18n="sv.6.t">Parking</h3><p data-i18n="sv.6.d">Parkiralište u blizini starog grada (uz nadoplatu).</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== GALERIJA ===== -->
+    <section id="galerija" class="section">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-i18n="gallery.eyebrow">Galerija</p>
+          <h2 data-i18n="gallery.title">Doživite atmosferu</h2>
+        </div>
+        <!-- Zamijenite placeholder elemente pravim fotografijama, npr.
+             <img src="images/soba-1.jpg" alt="Opis fotografije" loading="lazy"> -->
+        <div class="gallery">
+          <div class="ph ph-1 g-wide" role="img" aria-label="Fotografija 1"></div>
+          <div class="ph ph-2" role="img" aria-label="Fotografija 2"></div>
+          <div class="ph ph-3" role="img" aria-label="Fotografija 3"></div>
+          <div class="ph ph-4" role="img" aria-label="Fotografija 4"></div>
+          <div class="ph ph-5 g-wide" role="img" aria-label="Fotografija 5"></div>
+          <div class="ph ph-6" role="img" aria-label="Fotografija 6"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== LOKACIJA ===== -->
+    <section id="lokacija" class="section section-alt">
+      <div class="container split">
+        <div>
+          <p class="eyebrow" data-i18n="loc.eyebrow">Lokacija</p>
+          <h2 data-i18n="loc.title">U srcu povijesne jezgre</h2>
+          <p data-i18n="loc.p">Recepcija se nalazi u pješačkoj zoni starog grada. Automobil možete ostaviti na obližnjem parkiralištu, a naše osoblje pomoći će vam s prtljagom.</p>
+          <ul class="distances">
+            <li><span data-i18n="loc.d1">Plaža</span><strong>5 min</strong></li>
+            <li><span data-i18n="loc.d2">Autobusni kolodvor</span><strong>10 min</strong></li>
+            <li><span data-i18n="loc.d3">Trajektna luka</span><strong>15 min</strong></li>
+            <li><span data-i18n="loc.d4">Zračna luka</span><strong>30 km</strong></li>
+          </ul>
+        </div>
+        <div class="map">
+          <!-- Zamijenite src vlastitim Google Maps / OpenStreetMap embed linkom -->
+          <iframe
+            title="Karta – Hotel Antemurale"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=15.9%2C45.79%2C16.0%2C45.83&amp;layer=mapnik"
+            loading="lazy"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== REZERVACIJA ===== -->
+    <section id="rezervacija" class="section">
+      <div class="container split">
+        <div>
+          <p class="eyebrow" data-i18n="book.eyebrow">Rezervacija</p>
+          <h2 data-i18n="book.title">Pošaljite upit</h2>
+          <p data-i18n="book.p">Ispunite obrazac i javit ćemo vam se s ponudom u najkraćem roku. Za izravnu rezervaciju možete nas i nazvati.</p>
+          <ul class="contact-list">
+            <li><span data-i18n="c.phone">Telefon</span><a href="tel:+385000000000">+385 00 000 0000</a></li>
+            <li><span data-i18n="c.email">E-pošta</span><a href="mailto:info@hotel-antemurale.hr">info@hotel-antemurale.hr</a></li>
+            <li><span data-i18n="c.reception">Recepcija</span><span data-i18n="c.hours">svaki dan 07:00 – 23:00</span></li>
+          </ul>
+        </div>
+
+        <form class="booking-form" id="booking-form" novalidate>
+          <div class="row">
+            <label><span data-i18n="f.name">Ime i prezime</span>
+              <input type="text" name="name" required autocomplete="name">
+            </label>
+            <label><span data-i18n="f.email">E-pošta</span>
+              <input type="email" name="email" required autocomplete="email">
+            </label>
+          </div>
+          <div class="row">
+            <label><span data-i18n="f.arrival">Dolazak</span>
+              <input type="date" name="arrival" required>
+            </label>
+            <label><span data-i18n="f.departure">Odlazak</span>
+              <input type="date" name="departure" required>
+            </label>
+          </div>
+          <div class="row">
+            <label><span data-i18n="f.guests">Broj gostiju</span>
+              <select name="guests">
+                <option>1</option><option selected>2</option><option>3</option><option>4</option><option>5+</option>
+              </select>
+            </label>
+            <label><span data-i18n="f.type">Vrsta smještaja</span>
+              <select name="type">
+                <option data-i18n="rooms.r1.t">Dvokrevetna soba</option>
+                <option data-i18n="rooms.r2.t">Superior soba</option>
+                <option data-i18n="rooms.r3.t">Apartman</option>
+              </select>
+            </label>
+          </div>
+          <label><span data-i18n="f.msg">Poruka</span>
+            <textarea name="message" rows="4"></textarea>
+          </label>
+          <p class="form-error" id="form-error" role="alert" hidden></p>
+          <button type="submit" class="btn" data-i18n="f.submit">Pošalji upit</button>
+          <p class="form-note" data-i18n="f.note">Slanjem obrasca otvara se vaš program za e-poštu s pripremljenom porukom.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== PODNOŽJE ===== -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <p class="logo-text footer-logo">Antemurale<small data-i18n="logo.sub">integralni hotel</small></p>
+        <p data-i18n="footer.tag">Autentičan boravak u srcu starog grada.</p>
+      </div>
+      <div>
+        <h4 data-i18n="footer.contact">Kontakt</h4>
+        <p>Glavna ulica 1<br>00000 Grad, Hrvatska</p>
+        <p><a href="tel:+385000000000">+385 00 000 0000</a><br><a href="mailto:info@hotel-antemurale.hr">info@hotel-antemurale.hr</a></p>
+      </div>
+      <div>
+        <h4 data-i18n="footer.follow">Pratite nas</h4>
+        <p><a href="#" rel="noopener">Instagram</a><br><a href="#" rel="noopener">Facebook</a></p>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© <span id="year"></span> Hotel Antemurale. <span data-i18n="footer.rights">Sva prava pridržana.</span></p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
