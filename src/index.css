@@ -252,7 +252,7 @@ h3 { font-size: 1.5rem; }
 .house-reception .house-num { background: var(--terracotta); }
 
 /* Usluge */
-.services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem 2.5rem; }
+.services { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem 2.5rem; }
 .service .icon { font-size: 1.8rem; display: block; margin-bottom: .6rem; }
 .service h3 { color: var(--white); }
 .service p { margin: 0; color: #b8c7cc; }

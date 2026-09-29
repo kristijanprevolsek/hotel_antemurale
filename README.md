@@ -40,7 +40,7 @@ Većina podataka nalazi se u `src/content.js`:
 - [ ] **Kontakt** (`CONTACT`): telefon, e-pošta, poštanski broj, Instagram, Facebook
 - [ ] **Cijene** (`PRICES`), vrste soba i kvadrature
 - [ ] **Kuće**: nazivi, broj jedinica i adrese
-- [ ] **Udaljenosti** u sekciji *Lokacija* (upisane su približne vrijednosti – provjerite ih)
+- [ ] **Udaljenosti** do Zagreba i Zadra u sekciji *Lokacija* (približne vrijednosti – provjerite ih)
 - [ ] **Fotografije**:
   - stavite ih u `public/images/`
   - galerija: popis `PHOTOS` u `src/components/Gallery.jsx`

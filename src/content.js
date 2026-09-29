@@ -41,11 +41,11 @@ export const content = {
       title: "Hotel koji živi sa selom",
       p: [
         "Hotel Antemurale je integralni hotel – umjesto jedne velike zgrade, naše sobe i apartmani smješteni su u nekoliko obnovljenih kuća u selu Rastovača. Boravite u mirnom, autentičnom ambijentu, okruženi šumom i livadama, a i dalje uživate u svim pogodnostima hotela.",
-        "Središnja recepcija brine o vašem dolasku, ključevima, doručku, čišćenju i svim željama – od savjeta za obilazak jezera do organizacije izleta po Lici."
+        "Središnja recepcija brine o vašem dolasku i svim željama. Nakon dana na jezerima opustite se u sauni, na sunčanoj terasi i u vrtu uz vanjski kamin, a u restoranu i baru poslužujemo jela lokalne kuhinje."
       ],
       highlights: [
-        { title: "Uz Nacionalni park", text: "Do ulaza u park Plitvička jezera stižete u nekoliko minuta." },
-        { title: "Hotelska usluga", text: "Recepcija, doručak, dnevno čišćenje i prijenos prtljage." },
+        { title: "Uz Nacionalni park", text: "Samo 600 m, odnosno 8 minuta hoda do Ulaza 1 Nacionalnog parka Plitvička jezera." },
+        { title: "Hotelska usluga", text: "Recepcija, doručak, restoran s domaćom kuhinjom, bar i sauna." },
         { title: "Održivi turizam", text: "Obnavljamo postojeće kuće i čuvamo život u tradicijskom selu." }
       ]
     },
@@ -56,11 +56,11 @@ export const content = {
       from: "od",
       night: "noć",
       items: [
-        { title: "Dvokrevetna soba", meta: "2 osobe · 18–22 m²", text: "Udobna soba s bračnim ili odvojenim krevetima, vlastitom kupaonicom i pogledom na zelenilo." },
+        { title: "Dvokrevetna soba", meta: "2 osobe · 18–22 m²", text: "Udobna soba s bračnim ili odvojenim krevetima, vlastitom kupaonicom s tušem i pogledom na vrt." },
         { title: "Superior soba", meta: "2–3 osobe · 25–30 m²", text: "Prostranija soba s dnevnim kutkom, drvenim detaljima i pogledom na šumu i livade." },
         { title: "Apartman", meta: "2–4 osobe · 40–55 m²", text: "Zasebna spavaća soba, dnevni boravak i čajna kuhinja – idealno za obitelji i duže boravke." }
       ],
-      amenities: ["Klima uređaj", "Besplatan Wi-Fi", "Smart TV", "Minibar", "Sef", "Sušilo za kosu", "Kozmetika", "Aparat za kavu"]
+      amenities: ["Klima uređaj", "TV ravnog ekrana", "Sef", "Radni stol", "Terasa", "Kupaonica s tušem", "Pogled na vrt", "Obiteljske sobe"]
     },
     houses: {
       eyebrow: "Naše kuće",
@@ -78,12 +78,14 @@ export const content = {
       eyebrow: "Usluge",
       title: "Sve što očekujete od hotela",
       items: [
-        { icon: "☕", title: "Doručak", text: "Domaći doručak s ličkim namirnicama svako jutro." },
+        { icon: "☕", title: "Doručak", text: "Doručak na bazi švedskog stola ili kontinentalni doručak." },
+        { icon: "🍽", title: "Restoran i bar", text: "Restoran s jelima lokalne kuhinje i bar za opuštanje uz piće." },
+        { icon: "♨", title: "Sauna", text: "Sauna za opuštanje nakon obilaska jezera i pješačenja." },
+        { icon: "🌿", title: "Vrt i terasa", text: "Bujni vrt, sunčana terasa i vanjski kamin za tople večeri." },
+        { icon: "🎱", title: "Igraonica", text: "Biljar, stolni tenis i pikado, a za najmlađe unutarnja dječja igraonica." },
+        { icon: "🅿", title: "Besplatan parking", text: "Besplatno parkiralište za goste na samom objektu." },
         { icon: "🛎", title: "Recepcija", text: "Osoblje na raspolaganju za prijavu, savjete i pomoć." },
-        { icon: "🧳", title: "Prijenos prtljage", text: "Vašu prtljagu dostavljamo do sobe." },
-        { icon: "🧹", title: "Dnevno čišćenje", text: "Uredne sobe i svježi ručnici svaki dan." },
-        { icon: "🥾", title: "Izleti", text: "Savjeti za obilazak jezera, pješačke staze i izleti po Lici." },
-        { icon: "🅿", title: "Parking", text: "Parkiralište za goste u blizini kuća." }
+        { icon: "🥾", title: "Savjeti za izlete", text: "Preporuke za obilazak jezera, pješačke staze i izlete po Lici." }
       ]
     },
     gallery: {
@@ -94,11 +96,11 @@ export const content = {
     location: {
       eyebrow: "Lokacija",
       title: "Na rubu Nacionalnog parka",
-      text: "Hotel se nalazi u selu Rastovača, neposredno uz Ulaz 1 Nacionalnog parka Plitvička jezera i pogled na Veliki slap. Recepcija je na adresi Rastovača 13.",
+      text: "Hotel se nalazi u selu Rastovača, samo 600 m (8 minuta hoda) od Ulaza 1 Nacionalnog parka Plitvička jezera i pogleda na Veliki slap. Recepcija je na adresi Rastovača 13.",
       directions: "Upute za dolazak",
       mapTitle: "Karta – Hotel Antemurale, Rastovača 13",
       distances: [
-        { label: "NP Plitvička jezera – Ulaz 1", value: "cca 1 km" },
+        { label: "NP Plitvička jezera – Ulaz 1", value: "600 m · 8 min hoda" },
         { label: "Zagreb", value: "cca 130 km" },
         { label: "Zadar", value: "cca 120 km" },
         { label: "Zračna luka Zadar", value: "cca 130 km" }
@@ -160,11 +162,11 @@ export const content = {
       title: "A hotel that lives with the village",
       p: [
         "Hotel Antemurale is an integrated hotel – instead of one large building, our rooms and apartments are spread across several restored houses in the village of Rastovača. You stay in a quiet, authentic setting surrounded by forests and meadows, while still enjoying every comfort of a hotel.",
-        "Our central reception takes care of your arrival, keys, breakfast, housekeeping and any wish you may have – from tips for visiting the lakes to organising excursions around Lika."
+        "Our central reception takes care of your arrival and any wish you may have. After a day at the lakes, unwind in the sauna, on the sun terrace or in the garden by the outdoor fireplace, while our restaurant and bar serve local cuisine."
       ],
       highlights: [
-        { title: "Next to the National Park", text: "The Plitvice Lakes park entrance is just minutes away." },
-        { title: "Hotel service", text: "Reception, breakfast, daily housekeeping and luggage transfer." },
+        { title: "Next to the National Park", text: "Just 600 m – an 8-minute walk – from Entrance 1 of Plitvice Lakes National Park." },
+        { title: "Hotel service", text: "Reception, breakfast, a restaurant serving local cuisine, a bar and a sauna." },
         { title: "Sustainable tourism", text: "We restore existing houses and keep a traditional village alive." }
       ]
     },
@@ -175,11 +177,11 @@ export const content = {
       from: "from",
       night: "night",
       items: [
-        { title: "Double room", meta: "2 guests · 18–22 m²", text: "A cosy room with a double or twin beds, private bathroom and a view of the greenery." },
+        { title: "Double room", meta: "2 guests · 18–22 m²", text: "A cosy room with a double or twin beds, private bathroom with shower and a view of the garden." },
         { title: "Superior room", meta: "2–3 guests · 25–30 m²", text: "A more spacious room with a seating area, wooden details and views of forests and meadows." },
         { title: "Apartment", meta: "2–4 guests · 40–55 m²", text: "Separate bedroom, living room and kitchenette – ideal for families and longer stays." }
       ],
-      amenities: ["Air conditioning", "Free Wi-Fi", "Smart TV", "Minibar", "Safe", "Hair dryer", "Toiletries", "Coffee machine"]
+      amenities: ["Air conditioning", "Flat-screen TV", "Safe", "Desk", "Patio", "Bathroom with shower", "Garden view", "Family rooms"]
     },
     houses: {
       eyebrow: "Our houses",
@@ -197,12 +199,14 @@ export const content = {
       eyebrow: "Services",
       title: "Everything you expect from a hotel",
       items: [
-        { icon: "☕", title: "Breakfast", text: "A homemade breakfast with local Lika produce every morning." },
+        { icon: "☕", title: "Breakfast", text: "Buffet or continental breakfast." },
+        { icon: "🍽", title: "Restaurant & bar", text: "A restaurant serving local cuisine and a bar to relax with a drink." },
+        { icon: "♨", title: "Sauna", text: "A sauna to unwind after exploring the lakes and hiking." },
+        { icon: "🌿", title: "Garden & terrace", text: "A lush garden, sun terrace and outdoor fireplace for warm evenings." },
+        { icon: "🎱", title: "Games room", text: "Pool, table tennis and darts, plus an indoor play area for the little ones." },
+        { icon: "🅿", title: "Free parking", text: "Free private parking on site." },
         { icon: "🛎", title: "Reception", text: "Our staff are here for check-in, advice and help." },
-        { icon: "🧳", title: "Luggage transfer", text: "We bring your luggage to your room." },
-        { icon: "🧹", title: "Daily housekeeping", text: "Tidy rooms and fresh towels every day." },
-        { icon: "🥾", title: "Excursions", text: "Tips for visiting the lakes, hiking trails and trips around Lika." },
-        { icon: "🅿", title: "Parking", text: "Guest parking close to the houses." }
+        { icon: "🥾", title: "Trip advice", text: "Tips for visiting the lakes, hiking trails and trips around Lika." }
       ]
     },
     gallery: {
@@ -213,11 +217,11 @@ export const content = {
     location: {
       eyebrow: "Location",
       title: "At the edge of the National Park",
-      text: "The hotel is in the village of Rastovača, right next to Entrance 1 of Plitvice Lakes National Park and the Great Waterfall viewpoint. Reception is at Rastovača 13.",
+      text: "The hotel is in the village of Rastovača, just 600 m (an 8-minute walk) from Entrance 1 of Plitvice Lakes National Park and the Great Waterfall viewpoint. Reception is at Rastovača 13.",
       directions: "Get directions",
       mapTitle: "Map – Hotel Antemurale, Rastovača 13",
       distances: [
-        { label: "Plitvice Lakes NP – Entrance 1", value: "approx. 1 km" },
+        { label: "Plitvice Lakes NP – Entrance 1", value: "600 m · 8 min walk" },
         { label: "Zagreb", value: "approx. 130 km" },
         { label: "Zadar", value: "approx. 120 km" },
         { label: "Zadar Airport", value: "approx. 130 km" }
