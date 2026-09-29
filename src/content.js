@@ -41,11 +41,11 @@ export const content = {
       title: "Hotel koji živi sa selom",
       p: [
         "Hotel Antemurale je integralni hotel – umjesto jedne velike zgrade, naše sobe i apartmani smješteni su u nekoliko obnovljenih kuća u selu Rastovača. Boravite u mirnom, autentičnom ambijentu, okruženi šumom i livadama, a i dalje uživate u svim pogodnostima hotela.",
-        "Središnja recepcija brine o vašem dolasku i svim željama. Nakon dana na jezerima opustite se u sauni, na sunčanoj terasi i u vrtu uz vanjski kamin, a u restoranu i baru poslužujemo jela lokalne kuhinje."
+        "Središnja recepcija brine o vašem dolasku i svim željama. Nakon dana na jezerima opustite se u sauni ili jacuzziju na otvorenom, na sunčanoj terasi i u vrtu uz vanjski kamin, a u restoranu i baru poslužujemo jela lokalne kuhinje."
       ],
       highlights: [
         { title: "Uz Nacionalni park", text: "Samo 600 m, odnosno 8 minuta hoda do Ulaza 1 Nacionalnog parka Plitvička jezera." },
-        { title: "Hotelska usluga", text: "Recepcija, doručak, restoran s domaćom kuhinjom, bar i sauna." },
+        { title: "Hotelska usluga", text: "Recepcija, doručak, restoran s domaćom kuhinjom, bar, sauna i jacuzzi na otvorenom." },
         { title: "Održivi turizam", text: "Obnavljamo postojeće kuće i čuvamo život u tradicijskom selu." }
       ]
     },
@@ -80,9 +80,9 @@ export const content = {
       items: [
         { icon: "☕", title: "Doručak", text: "Doručak na bazi švedskog stola ili kontinentalni doručak." },
         { icon: "🍽", title: "Restoran i bar", text: "Restoran s jelima lokalne kuhinje i bar za opuštanje uz piće." },
-        { icon: "♨", title: "Sauna", text: "Sauna za opuštanje nakon obilaska jezera i pješačenja." },
+        { icon: "♨", title: "Sauna i jacuzzi", text: "Sauna i jacuzzi na otvorenom za opuštanje nakon obilaska jezera i pješačenja." },
         { icon: "🌿", title: "Vrt i terasa", text: "Bujni vrt, sunčana terasa i vanjski kamin za tople večeri." },
-        { icon: "🎱", title: "Igraonica", text: "Biljar, stolni tenis i pikado, a za najmlađe unutarnja dječja igraonica." },
+        { icon: "🏹", title: "Zabava na otvorenom", text: "Streličarstvo lukom i strijelom, boćanje, ljuljačka i Plitvička alka – igra po uzoru na Sinjsku alku, samo što se u alku gađa vozeći bicikl." },
         { icon: "🅿", title: "Besplatan parking", text: "Besplatno parkiralište za goste na samom objektu." },
         { icon: "🛎", title: "Recepcija", text: "Osoblje na raspolaganju za prijavu, savjete i pomoć." },
         { icon: "🥾", title: "Savjeti za izlete", text: "Preporuke za obilazak jezera, pješačke staze i izlete po Lici." }
@@ -162,11 +162,11 @@ export const content = {
       title: "A hotel that lives with the village",
       p: [
         "Hotel Antemurale is an integrated hotel – instead of one large building, our rooms and apartments are spread across several restored houses in the village of Rastovača. You stay in a quiet, authentic setting surrounded by forests and meadows, while still enjoying every comfort of a hotel.",
-        "Our central reception takes care of your arrival and any wish you may have. After a day at the lakes, unwind in the sauna, on the sun terrace or in the garden by the outdoor fireplace, while our restaurant and bar serve local cuisine."
+        "Our central reception takes care of your arrival and any wish you may have. After a day at the lakes, unwind in the sauna or the outdoor jacuzzi, on the sun terrace or in the garden by the outdoor fireplace, while our restaurant and bar serve local cuisine."
       ],
       highlights: [
         { title: "Next to the National Park", text: "Just 600 m – an 8-minute walk – from Entrance 1 of Plitvice Lakes National Park." },
-        { title: "Hotel service", text: "Reception, breakfast, a restaurant serving local cuisine, a bar and a sauna." },
+        { title: "Hotel service", text: "Reception, breakfast, a restaurant serving local cuisine, a bar, a sauna and an outdoor jacuzzi." },
         { title: "Sustainable tourism", text: "We restore existing houses and keep a traditional village alive." }
       ]
     },
@@ -201,9 +201,9 @@ export const content = {
       items: [
         { icon: "☕", title: "Breakfast", text: "Buffet or continental breakfast." },
         { icon: "🍽", title: "Restaurant & bar", text: "A restaurant serving local cuisine and a bar to relax with a drink." },
-        { icon: "♨", title: "Sauna", text: "A sauna to unwind after exploring the lakes and hiking." },
+        { icon: "♨", title: "Sauna & jacuzzi", text: "A sauna and an outdoor jacuzzi to unwind after exploring the lakes and hiking." },
         { icon: "🌿", title: "Garden & terrace", text: "A lush garden, sun terrace and outdoor fireplace for warm evenings." },
-        { icon: "🎱", title: "Games room", text: "Pool, table tennis and darts, plus an indoor play area for the little ones." },
+        { icon: "🏹", title: "Outdoor fun", text: "Archery, bocce, a swing and the Plitvice Alka – our take on the famous Sinj Alka tournament, where you aim at the ring while riding a bicycle." },
         { icon: "🅿", title: "Free parking", text: "Free private parking on site." },
         { icon: "🛎", title: "Reception", text: "Our staff are here for check-in, advice and help." },
         { icon: "🥾", title: "Trip advice", text: "Tips for visiting the lakes, hiking trails and trips around Lika." }
