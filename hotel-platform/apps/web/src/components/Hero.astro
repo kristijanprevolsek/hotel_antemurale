@@ -1,0 +1,71 @@
+---
+import type { Lang } from '@hp/core';
+import { t } from '@hp/core';
+import { site } from '../site';
+import { useUI } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = useUI(lang);
+const lm = site.landmark;
+---
+<section class="hero wrap">
+  <h1>{t(site.hero.title, lang)}</h1>
+  <p class="lead">{t(site.hero.subtitle, lang)}</p>
+
+  {lm && (
+    <figure class="route" aria-label={`${site.name}: ${ui.walk(lm.walkMinutes)}, ${lm.distanceM} m`}>
+      <span class="stop">{site.name}</span>
+      <span class="path" aria-hidden="true">
+        <span class="time">{ui.walk(lm.walkMinutes)}</span>
+      </span>
+      <span class="stop end">{t(lm.name, lang)}<small>{lm.distanceM} m</small></span>
+    </figure>
+  )}
+
+  <a class="btn" href="#contact">{ui.book}</a>
+</section>
+
+<style>
+  .hero { padding-block: clamp(3rem, 10vw, 7rem) clamp(3rem, 8vw, 5rem); }
+  h1 { font-size: clamp(2.75rem, 8vw, 5.5rem); max-width: 14ch; letter-spacing: -0.01em; }
+  .lead { font-size: 1.2rem; color: var(--c-muted); }
+
+  /* Jedini "glasni" element stranice: pješačka ruta do znamenitosti */
+  .route {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: start;
+    gap: 1rem;
+    margin: 3.75rem 0 2.5rem; /* mjesto za oznaku vremena iznad linije */
+    max-width: 640px;
+  }
+  .stop { font: 600 1.05rem var(--f-body); display: flex; flex-direction: column; }
+  .stop small { font-weight: 400; color: var(--c-muted); font-size: 0.875rem; }
+  .stop::before {
+    content: '';
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--c-primary);
+    margin-bottom: 0.4rem;
+  }
+  .end { text-align: right; align-items: flex-end; }
+  .end::before { background: var(--c-accent); }
+  .path {
+    position: relative;
+    height: 3px;
+    background: repeating-linear-gradient(90deg, var(--c-primary) 0 10px, transparent 10px 18px);
+    transform-origin: left;
+    animation: walk 1.4s ease-out 0.3s both;
+    margin-top: 5.5px; /* sredina točke od 14px */
+  }
+  .time {
+    position: absolute;
+    left: 50%;
+    bottom: 0.6rem;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font: 400 1.5rem var(--f-heading);
+  }
+  @keyframes walk { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+</style>

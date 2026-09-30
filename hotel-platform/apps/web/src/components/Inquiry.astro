@@ -1,0 +1,100 @@
+---
+import type { Lang } from '@hp/core';
+import { t } from '@hp/core';
+import { site } from '../site';
+import { useUI } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = useUI(lang);
+const tel = site.contact.phone.replace(/\s/g, '');
+---
+<section id="contact" class="section">
+  <div class="wrap cols">
+    <div>
+      <h2>{ui.inquiryTitle}</h2>
+      <p>{ui.inquiryNote}</p>
+      <p>
+        <a href={`tel:${tel}`}>{site.contact.phone}</a><br />
+        {site.contact.email && <><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a><br /></>}
+        {site.contact.mapsUrl
+          ? <a href={site.contact.mapsUrl}>{site.contact.address}</a>
+          : site.contact.address}
+      </p>
+    </div>
+
+    {site.contact.email ? (
+      <form id="inquiry" data-email={site.contact.email} data-hotel={site.name} data-error={ui.datesError}>
+        <label>{ui.arrival}<input type="date" name="from" required /></label>
+        <label>{ui.departure}<input type="date" name="to" required /></label>
+        <label>{ui.guests}<input type="number" name="guests" min="1" max="10" value="2" required /></label>
+        <label>{ui.room}
+          <select name="room">
+            <option value="">{ui.anyRoom}</option>
+            {site.rooms.map((r) => <option value={t(r.name, lang)}>{t(r.name, lang)}</option>)}
+          </select>
+        </label>
+        <label class="full">{ui.name}<input name="name" autocomplete="name" required /></label>
+        <label class="full">{ui.message}<textarea name="message" rows="3"></textarea></label>
+        <p class="err full" role="alert" hidden></p>
+        <button class="btn full" type="submit">{ui.send}</button>
+      </form>
+    ) : (
+      <div><a class="btn" href={`tel:${tel}`}>{ui.call}</a></div>
+    )}
+  </div>
+</section>
+
+<script>
+  // Faza 1: bez servera, upit se otvara u e-mail klijentu gosta.
+  // Faza 2: zamijeniti s POST /api/inquiry koji koristi @hp/booking adapter.
+  const form = document.querySelector<HTMLFormElement>('#inquiry');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const d = new FormData(form);
+    const err = form.querySelector<HTMLElement>('.err')!;
+    if (String(d.get('to')) <= String(d.get('from'))) {
+      err.textContent = form.dataset.error ?? '';
+      err.hidden = false;
+      return;
+    }
+    err.hidden = true;
+    const lines = [
+      `${d.get('from')} - ${d.get('to')}`,
+      `Guests: ${d.get('guests')}`,
+      d.get('room') ? `Room: ${d.get('room')}` : null,
+      '',
+      String(d.get('message') ?? ''),
+      '',
+      String(d.get('name')),
+    ].filter((l) => l !== null);
+    const subject = `${form.dataset.hotel}: ${d.get('from')} - ${d.get('to')}`;
+    location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+  });
+</script>
+
+<style>
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; }
+  form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    background: var(--c-surface);
+    padding: 1.75rem;
+    border-radius: 8px;
+  }
+  label { min-width: 0; display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.9rem; color: var(--c-muted); }
+  input, select, textarea {
+    width: 100%;
+    min-width: 0;
+    font: inherit;
+    color: var(--c-text);
+    background: var(--c-bg);
+    border: 1px solid color-mix(in srgb, var(--c-muted) 35%, transparent);
+    border-radius: 6px;
+    padding: 0.6rem 0.7rem;
+  }
+  .full { grid-column: 1 / -1; }
+  .err { color: #B3261E; margin: 0; }
+  @media (max-width: 420px) { form { grid-template-columns: 1fr; } }
+</style>

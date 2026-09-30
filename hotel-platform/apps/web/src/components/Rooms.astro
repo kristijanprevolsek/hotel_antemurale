@@ -1,0 +1,56 @@
+---
+import type { Lang } from '@hp/core';
+import { t } from '@hp/core';
+import { site } from '../site';
+import { useUI } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = useUI(lang);
+---
+<section id="rooms" class="section">
+  <div class="wrap">
+    <h2>{ui.rooms}</h2>
+    <div class="grid">
+      {site.rooms.map((room) => (
+        <article>
+          {room.images[0]
+            ? <img src={room.images[0]} alt={t(room.name, lang)} loading="lazy" />
+            : <div class="ph" aria-hidden="true"></div>}
+          <h3>{t(room.name, lang)}</h3>
+          <p>{t(room.description, lang)}</p>
+          <ul>
+            <li>{ui.upTo(room.maxGuests)}</li>
+            {room.features.map((f) => <li>{t(f, lang)}</li>)}
+          </ul>
+          {room.priceFrom && <p class="price">{ui.from(room.priceFrom)}</p>}
+        </article>
+      ))}
+    </div>
+
+    <h3 class="am-title">{ui.amenities}</h3>
+    <ul class="amenities">
+      {site.amenities.map((a) => <li>{t(a, lang)}</li>)}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem 2rem;
+    margin-top: 2rem;
+  }
+  img, .ph { aspect-ratio: 4 / 3; width: 100%; object-fit: cover; margin-bottom: 1rem; border-radius: 4px; }
+  .ph { background: var(--c-surface); border: 1px solid color-mix(in srgb, var(--c-muted) 25%, transparent); }
+  article ul { list-style: none; padding: 0; margin: 0; color: var(--c-muted); font-size: 0.95rem; }
+  .price { margin-top: 0.75rem; font-weight: 600; }
+  .am-title { margin-top: 4rem; }
+  .amenities { columns: 2 220px; padding: 0; list-style: none; margin: 0; }
+  .amenities li {
+    padding: 0.5rem 0;
+    border-top: 1px solid color-mix(in srgb, var(--c-muted) 25%, transparent);
+    break-inside: avoid;
+  }
+</style>

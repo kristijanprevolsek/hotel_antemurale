@@ -1,0 +1,97 @@
+---
+import type { Lang } from '@hp/core';
+import { site } from '../site';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+}
+const { lang, title, description } = Astro.props;
+const { colors, colorsDark = {}, fonts } = site.theme;
+
+const vars = (c: Record<string, string | undefined>) =>
+  Object.entries(c)
+    .filter(([, v]) => v)
+    .map(([k, v]) => `--c-${k}:${v};`)
+    .join('');
+
+const themeCss = `
+:root{${vars(colors)}--f-heading:${fonts.heading};--f-body:${fonts.body};}
+@media (prefers-color-scheme: dark){:root{${vars(colorsDark)}}}`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Hotel',
+  name: site.name,
+  telephone: site.contact.phone,
+  address: site.contact.address,
+  url: `https://${site.domain}/${lang}/`,
+};
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {site.languages.map((l) => (
+      <link rel="alternate" hreflang={l} href={`https://${site.domain}/${l}/`} />
+    ))}
+    {fonts.googleFontsUrl && (
+      <>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="stylesheet" href={fonts.googleFontsUrl} />
+      </>
+    )}
+    <style set:html={themeCss}></style>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--c-bg);
+    color: var(--c-text);
+    font-family: var(--f-body);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  h1, h2, h3 {
+    font-family: var(--f-heading);
+    font-weight: 400;
+    line-height: 1.1;
+    margin: 0 0 0.5em;
+  }
+  h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+  h3 { font-size: 1.375rem; }
+  p { margin: 0 0 1em; max-width: 62ch; }
+  a { color: var(--c-primary); }
+  img { max-width: 100%; display: block; }
+  :focus-visible { outline: 3px solid var(--c-primary); outline-offset: 3px; }
+  .wrap { width: min(1120px, 100% - 2.5rem); margin-inline: auto; }
+  .section { padding-block: clamp(3.5rem, 8vw, 6rem); }
+  .btn {
+    display: inline-block;
+    padding: 0.8em 1.4em;
+    border-radius: 999px;
+    background: var(--c-primary);
+    color: var(--c-surface);
+    font: 600 1rem var(--f-body);
+    text-decoration: none;
+    border: 0;
+    cursor: pointer;
+  }
+  .btn:hover { filter: brightness(1.08); }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>

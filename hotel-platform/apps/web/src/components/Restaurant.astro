@@ -1,0 +1,23 @@
+---
+import type { Lang } from '@hp/core';
+import { t } from '@hp/core';
+import { site } from '../site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const r = site.restaurant;
+---
+{r && (
+  <section id="restaurant" class="section band">
+    <div class="wrap">
+      <h2>{t(r.title, lang)}</h2>
+      <p>{t(r.description, lang)}</p>
+      {r.hours && <p>{t(r.hours, lang)}</p>}
+    </div>
+  </section>
+)}
+
+<style>
+  .band { background: var(--c-primary); color: var(--c-surface); }
+  .band p { font-size: 1.2rem; }
+</style>

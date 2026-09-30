@@ -1,0 +1,45 @@
+---
+import type { Lang } from '@hp/core';
+import { site } from '../site';
+import { useUI } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = useUI(lang);
+---
+<header class="wrap">
+  <a class="brand" href={`/${lang}/`}>{site.name}</a>
+  <nav aria-label="Main">
+    <a href="#rooms">{ui.rooms}</a>
+    {site.restaurant && <a href="#restaurant">{ui.restaurant}</a>}
+    <a href="#contact">{ui.contact}</a>
+  </nav>
+  <ul class="langs">
+    {site.languages.map((l) => (
+      <li><a href={`/${l}/`} aria-current={l === lang ? 'page' : undefined}>{l}</a></li>
+    ))}
+  </ul>
+</header>
+
+<style>
+  header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-block: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .brand {
+    font: 600 1.5rem var(--f-heading);
+    color: var(--c-text);
+    text-decoration: none;
+    margin-right: auto;
+  }
+  nav { display: flex; gap: 1.25rem; }
+  nav a { color: var(--c-text); text-decoration: none; }
+  nav a:hover { color: var(--c-primary); }
+  .langs { display: flex; gap: 0.5rem; list-style: none; margin: 0; padding: 0; }
+  .langs a { color: var(--c-muted); text-decoration: none; font-size: 0.9rem; }
+  .langs a[aria-current] { color: var(--c-text); font-weight: 600; }
+  @media (max-width: 640px) { nav { order: 3; width: 100%; } }
+</style>
