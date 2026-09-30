@@ -6,9 +6,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Hero from '../../components/Hero.astro';
 import Rooms from '../../components/Rooms.astro';
+import Amenities from '../../components/Amenities.astro';
 import Restaurant from '../../components/Restaurant.astro';
 import Inquiry from '../../components/Inquiry.astro';
 import Footer from '../../components/Footer.astro';
+import MobileBar from '../../components/MobileBar.astro';
 
 export function getStaticPaths() {
   return site.languages.map((lang) => ({ params: { lang } }));
@@ -22,11 +24,13 @@ const lang = Astro.params.lang as Lang;
   description={t(site.hero.subtitle, lang)}
 >
   <Header lang={lang} />
-  <main>
+  <main id="main">
     <Hero lang={lang} />
     <Rooms lang={lang} />
+    <Amenities lang={lang} />
     <Restaurant lang={lang} />
     <Inquiry lang={lang} />
   </main>
-  <Footer />
+  <Footer lang={lang} />
+  <MobileBar lang={lang} />
 </BaseLayout>

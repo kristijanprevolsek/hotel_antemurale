@@ -42,6 +42,7 @@ export default defineSite({
   },
 
   hero: {
+    eyebrow: { hr: 'Rastovača · Plitvička Jezera', en: 'Rastovača · Plitvice Lakes', de: 'Rastovača · Plitvicer Seen' },
     title: {
       hr: 'Pješice do Plitvičkih jezera',
       en: 'Walk to the Plitvice Lakes',
@@ -57,16 +58,18 @@ export default defineSite({
   landmark: {
     name: { hr: 'Ulaz 1', en: 'Entrance 1', de: 'Eingang 1' },
     walkMinutes: 8,
-    distanceM: 700,
+    distanceM: 600,
   },
 
+  // highlight: prikazuje se u traci ispod naslovnog dijela (najviše 4)
   amenities: [
-    { hr: 'Besplatan parking', en: 'Free parking', de: 'Kostenloses Parken' },
-    { hr: 'Restoran i bar', en: 'Restaurant and bar', de: 'Restaurant und Bar' },
-    { hr: 'Sauna', en: 'Sauna', de: 'Sauna' },
-    { hr: 'Doručak na bazi švedskog stola', en: 'Buffet breakfast', de: 'Frühstücksbuffet' },
-    { hr: 'Igraonica i dječje igralište', en: 'Games room and playground', de: 'Spielzimmer und Spielplatz' },
-    { hr: 'Terasa i vrt', en: 'Terrace and garden', de: 'Terrasse und Garten' },
+    { icon: 'parking', highlight: true, label: { hr: 'Besplatan parking', en: 'Free parking', de: 'Kostenloses Parken' } },
+    { icon: 'restaurant', highlight: true, label: { hr: 'Restoran i bar', en: 'Restaurant and bar', de: 'Restaurant und Bar' } },
+    { icon: 'sauna', highlight: true, label: { hr: 'Sauna i jacuzzi na otvorenom', en: 'Sauna and outdoor jacuzzi', de: 'Sauna und Whirlpool im Freien' } },
+    { icon: 'breakfast', highlight: true, label: { hr: 'Doručak na bazi švedskog stola', en: 'Buffet breakfast', de: 'Frühstücksbuffet' } },
+    { icon: 'archery', label: { hr: 'Streličarstvo, boćanje i ljuljačka', en: 'Archery, bocce and a swing', de: 'Bogenschießen, Boccia und Schaukel' } },
+    { icon: 'garden', label: { hr: 'Terasa i vrt', en: 'Terrace and garden', de: 'Terrasse und Garten' } },
+    { icon: 'fireplace', label: { hr: 'Vanjski kamin', en: 'Outdoor fireplace', de: 'Kamin im Freien' } },
   ],
 
   // TODO: stvarne sobe, kvadrature, cijene i fotografije
@@ -90,9 +93,9 @@ export default defineSite({
       id: 'family',
       name: { hr: 'Obiteljska soba', en: 'Family room', de: 'Familienzimmer' },
       description: {
-        hr: 'Prostrana soba za obitelji, blizu igraonice i vrta.',
-        en: 'A spacious room for families, close to the games room and garden.',
-        de: 'Geräumiges Zimmer für Familien, nahe Spielzimmer und Garten.',
+        hr: 'Prostrana soba za obitelji, blizu vrta.',
+        en: 'A spacious room for families, close to the garden.',
+        de: 'Geräumiges Zimmer für Familien, nahe dem Garten.',
       },
       maxGuests: 4,
       features: [

@@ -1,0 +1,61 @@
+---
+import type { Lang } from '@hp/core';
+import { t, amenityIcon, amenityLabel } from '@hp/core';
+import { site } from '../site';
+import { useUI } from '../i18n';
+import Icon from './Icon.astro';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = useUI(lang);
+---
+{site.amenities.length > 0 && (
+  <section class="section amenities" aria-labelledby="amenities-title">
+    <div class="wrap">
+      <h2 id="amenities-title" data-reveal>{ui.amenities}</h2>
+      <ul class="grid" data-reveal>
+        {site.amenities.map((a) => {
+          const icon = amenityIcon(a) ?? 'check';
+          return (
+            <li>
+              <span class="ic"><Icon name={icon} /></span>
+              {t(amenityLabel(a), lang)}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+)}
+
+<style>
+  .amenities { padding-top: 0; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 0.75rem;
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+  }
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.9rem 1rem;
+    border-radius: var(--radius);
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    font-weight: 500;
+  }
+  .ic {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex: none;
+    border-radius: 50%;
+    background: var(--c-primary-soft);
+    color: var(--c-primary);
+  }
+</style>

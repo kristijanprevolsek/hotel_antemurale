@@ -5,6 +5,20 @@ export type Lang = 'hr' | 'en' | 'de' | 'it' | 'ko' | 'zh';
 /** Tekst po jezicima. Engleski je obavezan jer služi kao rezerva. */
 export type Localized = Partial<Record<Lang, string>> & { en: string };
 
+/** Ikone koje predložak zna prikazati (Lucide). Popis je u apps/web/src/icons.ts. */
+export const iconNames = [
+  'parking', 'restaurant', 'coffee', 'bar', 'sauna', 'hot-tub', 'garden', 'trees',
+  'kids', 'archery', 'bike', 'wifi', 'mountain', 'walk', 'fireplace', 'breakfast',
+  'guests', 'bed', 'bath', 'snowflake', 'safe', 'terrace', 'tv', 'pets',
+] as const;
+export type IconName = (typeof iconNames)[number];
+
+/** Pogodnost objekta. Kratki oblik je samo tekst, dugi dodaje ikonu i isticanje u naslovnom dijelu. */
+export type Amenity = Localized | { label: Localized; icon?: IconName; highlight?: boolean };
+
+export const amenityLabel = (a: Amenity): Localized => ('label' in a ? a.label : a) as Localized;
+export const amenityIcon = (a: Amenity): IconName | undefined => ('label' in a ? a.icon : undefined);
+
 export interface Room {
   id: string;
   name: Localized;
@@ -29,6 +43,7 @@ export interface Restaurant {
   description: Localized;
   openToPublic: boolean;
   hours?: Localized;
+  image?: string;
 }
 
 export type BookingConfig =
@@ -56,13 +71,23 @@ export interface SiteConfig {
       muted: string;
       primary: string;
       accent: string;
+      /** Tekst na primarnoj boji. Zadano: surface. */
+      onPrimary?: string;
     };
     colorsDark?: Partial<SiteConfig['theme']['colors']>;
     fonts: { heading: string; body: string; googleFontsUrl?: string };
   };
-  hero: { title: Localized; subtitle: Localized; image?: string };
+  /** Bez slike naslovni dio crta ilustraciju krajolika u bojama teme. */
+  hero: {
+    title: Localized;
+    subtitle: Localized;
+    /** Kratka oznaka iznad naslova, npr. mjesto */
+    eyebrow?: Localized;
+    image?: string;
+    imageAlt?: Localized;
+  };
   landmark?: Landmark;
-  amenities: Localized[];
+  amenities: Amenity[];
   rooms: Room[];
   restaurant?: Restaurant;
   booking: BookingConfig;

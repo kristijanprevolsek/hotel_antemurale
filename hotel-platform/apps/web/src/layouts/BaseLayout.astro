@@ -1,6 +1,7 @@
 ---
 import type { Lang } from '@hp/core';
 import { site } from '../site';
+import { useUI } from '../i18n';
 
 interface Props {
   lang: Lang;
@@ -8,25 +9,31 @@ interface Props {
   description: string;
 }
 const { lang, title, description } = Astro.props;
+const ui = useUI(lang);
 const { colors, colorsDark = {}, fonts } = site.theme;
 
 const vars = (c: Record<string, string | undefined>) =>
   Object.entries(c)
     .filter(([, v]) => v)
-    .map(([k, v]) => `--c-${k}:${v};`)
+    .map(([k, v]) => `--c-${k.replace(/[A-Z]/g, (m) => '-' + m.toLowerCase())}:${v};`)
     .join('');
 
+// onPrimary nije obavezan: zadano je surface, a u tamnoj temi tekst na svijetlom primarnom.
+const onPrimary = colors.onPrimary ?? colors.surface;
+const onPrimaryDark = colorsDark.onPrimary ?? colorsDark.bg ?? onPrimary;
 const themeCss = `
-:root{${vars(colors)}--f-heading:${fonts.heading};--f-body:${fonts.body};}
-@media (prefers-color-scheme: dark){:root{${vars(colorsDark)}}}`;
+:root{${vars(colors)}--c-on-primary:${onPrimary};--f-heading:${fonts.heading};--f-body:${fonts.body};color-scheme:light dark;}
+@media (prefers-color-scheme: dark){:root{${vars(colorsDark)}--c-on-primary:${onPrimaryDark};}}`;
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Hotel',
   name: site.name,
   telephone: site.contact.phone,
+  ...(site.contact.email && { email: site.contact.email }),
   address: site.contact.address,
   url: `https://${site.domain}/${lang}/`,
+  ...(site.hero.image && { image: `https://${site.domain}${site.hero.image}` }),
 };
 ---
 <!doctype html>
@@ -36,9 +43,18 @@ const jsonLd = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="theme-color" content={colors.bg} media="(prefers-color-scheme: light)" />
+    {colorsDark.bg && <meta name="theme-color" content={colorsDark.bg} media="(prefers-color-scheme: dark)" />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    {site.hero.image && <meta property="og:image" content={`https://${site.domain}${site.hero.image}`} />}
+    <link rel="canonical" href={`https://${site.domain}/${lang}/`} />
     {site.languages.map((l) => (
       <link rel="alternate" hreflang={l} href={`https://${site.domain}/${l}/`} />
     ))}
+    <link rel="alternate" hreflang="x-default" href={`https://${site.domain}/${site.defaultLang}/`} />
+    {site.hero.image && <link rel="preload" as="image" href={site.hero.image} fetchpriority="high" />}
     {fonts.googleFontsUrl && (
       <>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -50,13 +66,52 @@ const jsonLd = {
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
   </head>
   <body>
+    <a class="skip" href="#main">{ui.skip}</a>
     <slot />
+    <script>
+      // Blago pojavljivanje sekcija pri skrolanju. Bez JS-a ili uz smanjeno kretanje sve je odmah vidljivo.
+      const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add('in');
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -10% 0px' },
+        );
+        els.forEach((el) => {
+          if (el.getBoundingClientRect().top > innerHeight) {
+            el.classList.add('pre');
+            io.observe(el);
+          }
+        });
+      }
+    </script>
   </body>
 </html>
 
 <style is:global>
+  :root {
+    /* Izvedeni tokeni: računaju se iz boja objekta pa ih ne treba zadavati po objektu */
+    --c-line: color-mix(in srgb, var(--c-muted) 22%, transparent);
+    --c-primary-soft: color-mix(in srgb, var(--c-primary) 10%, var(--c-surface));
+    --c-accent-soft: color-mix(in srgb, var(--c-accent) 14%, var(--c-surface));
+    --radius: 14px;
+    --radius-sm: 8px;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px -12px rgb(0 0 0 / 0.18);
+    --header-h: 4.25rem;
+    --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
   *, *::before, *::after { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-h) + 1rem);
+  }
   body {
     margin: 0;
     background: var(--c-bg);
@@ -64,34 +119,75 @@ const jsonLd = {
     font-family: var(--f-body);
     font-size: 1.0625rem;
     line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
   h1, h2, h3 {
     font-family: var(--f-heading);
     font-weight: 400;
     line-height: 1.1;
     margin: 0 0 0.5em;
+    text-wrap: balance;
   }
-  h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
-  h3 { font-size: 1.375rem; }
-  p { margin: 0 0 1em; max-width: 62ch; }
-  a { color: var(--c-primary); }
+  h2 { font-size: clamp(2rem, 4.5vw, 3rem); letter-spacing: -0.01em; }
+  h3 { font-size: 1.5rem; }
+  p { margin: 0 0 1em; max-width: 62ch; text-wrap: pretty; }
+  a { color: var(--c-primary); text-underline-offset: 0.2em; }
   img { max-width: 100%; display: block; }
-  :focus-visible { outline: 3px solid var(--c-primary); outline-offset: 3px; }
-  .wrap { width: min(1120px, 100% - 2.5rem); margin-inline: auto; }
-  .section { padding-block: clamp(3.5rem, 8vw, 6rem); }
+  :focus-visible { outline: 3px solid var(--c-primary); outline-offset: 3px; border-radius: 4px; }
+  .icon { width: 1.25em; height: 1.25em; flex: none; }
+
+  .wrap { width: min(1160px, 100% - 2.5rem); margin-inline: auto; }
+  .section { padding-block: clamp(4rem, 9vw, 7rem); }
+  .eyebrow {
+    display: block;
+    font: 600 0.8125rem/1.2 var(--f-body);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--c-accent);
+    margin-bottom: 0.9rem;
+  }
+  .intro { color: var(--c-muted); font-size: 1.125rem; }
+
   .btn {
-    display: inline-block;
-    padding: 0.8em 1.4em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55em;
+    min-height: 48px;
+    padding: 0.75em 1.5em;
     border-radius: 999px;
     background: var(--c-primary);
-    color: var(--c-surface);
+    color: var(--c-on-primary);
     font: 600 1rem var(--f-body);
     text-decoration: none;
-    border: 0;
+    border: 1px solid transparent;
     cursor: pointer;
+    transition: background-color 200ms var(--ease), transform 200ms var(--ease), box-shadow 200ms var(--ease);
   }
-  .btn:hover { filter: brightness(1.08); }
+  .btn:hover { background: color-mix(in srgb, var(--c-primary) 88%, var(--c-text)); box-shadow: var(--shadow); }
+  .btn:active { transform: translateY(1px); }
+  .btn .icon { transition: transform 200ms var(--ease); }
+  .btn:hover .icon-move { transform: translateX(3px); }
+  .btn.ghost { background: transparent; color: var(--c-text); border-color: var(--c-line); }
+  .btn.ghost:hover { border-color: var(--c-primary); color: var(--c-primary); box-shadow: none; }
+
+  .skip {
+    position: absolute;
+    left: 1rem;
+    top: -4rem;
+    z-index: 100;
+    padding: 0.75rem 1rem;
+    background: var(--c-surface);
+    color: var(--c-text);
+    border-radius: var(--radius-sm);
+  }
+  .skip:focus { top: 1rem; }
+
+  [data-reveal].pre { opacity: 0; transform: translateY(16px); }
+  [data-reveal].pre.in { opacity: 1; transform: none; transition: opacity 600ms var(--ease), transform 600ms var(--ease); }
+
   @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
     *, *::before, *::after { animation: none !important; transition: none !important; }
   }
 </style>

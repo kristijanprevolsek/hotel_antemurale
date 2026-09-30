@@ -1,71 +1,151 @@
 ---
 import type { Lang } from '@hp/core';
-import { t } from '@hp/core';
+import { t, amenityIcon, amenityLabel } from '@hp/core';
 import { site } from '../site';
 import { useUI } from '../i18n';
+import Icon from './Icon.astro';
+import Landscape from './Landscape.astro';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const ui = useUI(lang);
 const lm = site.landmark;
+const tel = site.contact.phone.replace(/\s/g, '');
+const highlights = site.amenities.filter((a) => 'label' in a && a.highlight).slice(0, 4);
 ---
-<section class="hero wrap">
-  <h1>{t(site.hero.title, lang)}</h1>
-  <p class="lead">{t(site.hero.subtitle, lang)}</p>
+<section class="hero">
+  <div class="wrap grid">
+    <div class="copy">
+      {site.hero.eyebrow && <span class="eyebrow">{t(site.hero.eyebrow, lang)}</span>}
+      <h1>{t(site.hero.title, lang)}</h1>
+      <p class="lead">{t(site.hero.subtitle, lang)}</p>
 
-  {lm && (
-    <figure class="route" aria-label={`${site.name}: ${ui.walk(lm.walkMinutes)}, ${lm.distanceM} m`}>
-      <span class="stop">{site.name}</span>
-      <span class="path" aria-hidden="true">
-        <span class="time">{ui.walk(lm.walkMinutes)}</span>
-      </span>
-      <span class="stop end">{t(lm.name, lang)}<small>{lm.distanceM} m</small></span>
-    </figure>
+      {lm && (
+        <figure class="route" aria-label={`${site.name}: ${ui.walk(lm.walkMinutes)}, ${lm.distanceM} m`}>
+          <span class="stop">{site.name}</span>
+          <span class="path" aria-hidden="true">
+            <span class="time"><Icon name="walk" />{ui.walk(lm.walkMinutes)}</span>
+          </span>
+          <span class="stop end">{t(lm.name, lang)}<small>{lm.distanceM} m</small></span>
+        </figure>
+      )}
+
+      <div class="actions">
+        <a class="btn" href="#contact">{ui.book}<span class="icon-move"><Icon name="arrow-right" /></span></a>
+        <a class="btn ghost" href={`tel:${tel}`}><Icon name="phone" />{site.contact.phone}</a>
+      </div>
+    </div>
+
+    <div class="visual">
+      {site.hero.image
+        ? <img src={site.hero.image} alt={site.hero.imageAlt ? t(site.hero.imageAlt, lang) : ''} fetchpriority="high" decoding="async" />
+        : <Landscape uid="hero" />}
+    </div>
+  </div>
+
+  {highlights.length > 0 && (
+    <ul class="wrap facts">
+      {highlights.map((a) => {
+        const icon = amenityIcon(a);
+        return <li>{icon && <Icon name={icon} />}<span>{t(amenityLabel(a), lang)}</span></li>;
+      })}
+    </ul>
   )}
-
-  <a class="btn" href="#contact">{ui.book}</a>
 </section>
 
 <style>
-  .hero { padding-block: clamp(3rem, 10vw, 7rem) clamp(3rem, 8vw, 5rem); }
-  h1 { font-size: clamp(2.75rem, 8vw, 5.5rem); max-width: 14ch; letter-spacing: -0.01em; }
-  .lead { font-size: 1.2rem; color: var(--c-muted); }
+  .hero { padding-block: clamp(2rem, 6vw, 4.5rem) clamp(3rem, 7vw, 5rem); }
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+  }
+  h1 { font-size: clamp(2.75rem, 6.5vw, 5.25rem); letter-spacing: -0.02em; max-width: 13ch; }
+  .lead { font-size: clamp(1.125rem, 1.6vw, 1.25rem); color: var(--c-muted); }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 
-  /* Jedini "glasni" element stranice: pješačka ruta do znamenitosti */
+  .visual {
+    position: relative;
+    aspect-ratio: 5 / 6;
+    border-radius: calc(var(--radius) * 2) calc(var(--radius) * 2) calc(var(--radius) * 2) 120px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    background: var(--c-surface);
+  }
+  .visual img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* Potpis stranice: pješačka ruta do znamenitosti */
   .route {
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: start;
     gap: 1rem;
-    margin: 3.75rem 0 2.5rem; /* mjesto za oznaku vremena iznad linije */
-    max-width: 640px;
+    margin: 3.25rem 0 2.25rem; /* mjesto za oznaku vremena iznad linije */
+    max-width: 560px;
   }
-  .stop { font: 600 1.05rem var(--f-body); display: flex; flex-direction: column; }
+  .stop { font: 600 1rem var(--f-body); display: flex; flex-direction: column; }
   .stop small { font-weight: 400; color: var(--c-muted); font-size: 0.875rem; }
   .stop::before {
     content: '';
     width: 14px; height: 14px;
     border-radius: 50%;
     background: var(--c-primary);
-    margin-bottom: 0.4rem;
+    box-shadow: 0 0 0 5px var(--c-primary-soft);
+    margin-bottom: 0.5rem;
   }
   .end { text-align: right; align-items: flex-end; }
-  .end::before { background: var(--c-accent); }
+  .end::before { background: var(--c-accent); box-shadow: 0 0 0 5px var(--c-accent-soft); }
   .path {
     position: relative;
     height: 3px;
     background: repeating-linear-gradient(90deg, var(--c-primary) 0 10px, transparent 10px 18px);
     transform-origin: left;
-    animation: walk 1.4s ease-out 0.3s both;
+    animation: walk 1.4s var(--ease) 0.3s both;
     margin-top: 5.5px; /* sredina točke od 14px */
   }
   .time {
     position: absolute;
     left: 50%;
-    bottom: 0.6rem;
+    bottom: 0.7rem;
     transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     white-space: nowrap;
     font: 400 1.5rem var(--f-heading);
   }
+  .time :global(.icon) { width: 1rem; height: 1rem; color: var(--c-primary); }
   @keyframes walk { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1px;
+    list-style: none;
+    padding: 0;
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+    background: var(--c-line);
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .facts li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.1rem 1.25rem;
+    background: var(--c-surface);
+    font-weight: 500;
+  }
+  .facts :global(.icon) { color: var(--c-primary); width: 1.4rem; height: 1.4rem; }
+
+  @media (max-width: 860px) {
+    .grid { grid-template-columns: 1fr; }
+    .visual { aspect-ratio: 16 / 10; order: -1; border-radius: var(--radius) var(--radius) var(--radius) 64px; }
+  }
+  @media (max-width: 480px) {
+    .actions .btn { flex: 1 1 100%; }
+    .time { font-size: 1.25rem; }
+  }
 </style>

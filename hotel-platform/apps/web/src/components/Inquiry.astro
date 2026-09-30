@@ -3,6 +3,7 @@ import type { Lang } from '@hp/core';
 import { t } from '@hp/core';
 import { site } from '../site';
 import { useUI } from '../i18n';
+import Icon from './Icon.astro';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -11,23 +12,37 @@ const tel = site.contact.phone.replace(/\s/g, '');
 ---
 <section id="contact" class="section">
   <div class="wrap cols">
-    <div>
+    <div class="info" data-reveal>
+      <span class="eyebrow">{ui.contact}</span>
       <h2>{ui.inquiryTitle}</h2>
-      <p>{ui.inquiryNote}</p>
-      <p>
-        <a href={`tel:${tel}`}>{site.contact.phone}</a><br />
-        {site.contact.email && <><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a><br /></>}
-        {site.contact.mapsUrl
-          ? <a href={site.contact.mapsUrl}>{site.contact.address}</a>
-          : site.contact.address}
-      </p>
+      <p class="intro">{ui.inquiryNote}</p>
+      <ul class="lines">
+        <li>
+          <span class="ic"><Icon name="phone" /></span>
+          <span><small>{ui.phone}</small><a href={`tel:${tel}`}>{site.contact.phone}</a></span>
+        </li>
+        {site.contact.email && (
+          <li>
+            <span class="ic"><Icon name="mail" /></span>
+            <span><small>{ui.email}</small><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></span>
+          </li>
+        )}
+        <li>
+          <span class="ic"><Icon name="map-pin" /></span>
+          <span>
+            <small>{ui.address}</small>
+            {site.contact.address}
+            {site.contact.mapsUrl && <a class="dir" href={site.contact.mapsUrl} target="_blank" rel="noopener">{ui.directions}</a>}
+          </span>
+        </li>
+      </ul>
     </div>
 
     {site.contact.email ? (
-      <form id="inquiry" data-email={site.contact.email} data-hotel={site.name} data-error={ui.datesError}>
+      <form id="inquiry" class="card" novalidate data-email={site.contact.email} data-hotel={site.name} data-error={ui.datesError} data-reveal>
         <label>{ui.arrival}<input type="date" name="from" required /></label>
-        <label>{ui.departure}<input type="date" name="to" required /></label>
-        <label>{ui.guests}<input type="number" name="guests" min="1" max="10" value="2" required /></label>
+        <label>{ui.departure}<input type="date" name="to" required aria-describedby="inquiry-err" /></label>
+        <label>{ui.guests}<input type="number" name="guests" min="1" max="10" value="2" inputmode="numeric" required /></label>
         <label>{ui.room}
           <select name="room">
             <option value="">{ui.anyRoom}</option>
@@ -36,11 +51,16 @@ const tel = site.contact.phone.replace(/\s/g, '');
         </label>
         <label class="full">{ui.name}<input name="name" autocomplete="name" required /></label>
         <label class="full">{ui.message}<textarea name="message" rows="3"></textarea></label>
-        <p class="err full" role="alert" hidden></p>
-        <button class="btn full" type="submit">{ui.send}</button>
+        <p id="inquiry-err" class="err full" role="alert" hidden></p>
+        <button class="btn full" type="submit">{ui.send}<span class="icon-move"><Icon name="arrow-right" /></span></button>
+        <p class="note full">{ui.mailtoNote}</p>
       </form>
     ) : (
-      <div><a class="btn" href={`tel:${tel}`}>{ui.call}</a></div>
+      <div class="card call" data-reveal>
+        <span class="ic big"><Icon name="phone" /></span>
+        <p class="tel">{site.contact.phone}</p>
+        <a class="btn" href={`tel:${tel}`}><Icon name="phone" />{ui.call}</a>
+      </div>
     )}
   </div>
 </section>
@@ -49,52 +69,117 @@ const tel = site.contact.phone.replace(/\s/g, '');
   // Faza 1: bez servera, upit se otvara u e-mail klijentu gosta.
   // Faza 2: zamijeniti s POST /api/inquiry koji koristi @hp/booking adapter.
   const form = document.querySelector<HTMLFormElement>('#inquiry');
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const d = new FormData(form);
+  if (form) {
+    const from = form.querySelector<HTMLInputElement>('[name="from"]')!;
+    const to = form.querySelector<HTMLInputElement>('[name="to"]')!;
     const err = form.querySelector<HTMLElement>('.err')!;
-    if (String(d.get('to')) <= String(d.get('from'))) {
-      err.textContent = form.dataset.error ?? '';
+    const iso = (d: Date) => new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+    const nextDay = (s: string) => iso(new Date(new Date(s + 'T12:00').getTime() + 864e5));
+
+    // Nema dolazaka u prošlosti; odlazak najranije dan nakon dolaska
+    from.min = iso(new Date());
+    to.min = nextDay(from.min);
+    from.addEventListener('change', () => {
+      if (!from.value) return;
+      to.min = nextDay(from.value);
+      if (!to.value || to.value <= from.value) to.value = to.min;
+    });
+
+    const showError = (msg: string, field?: HTMLElement) => {
+      err.textContent = msg;
       err.hidden = false;
-      return;
-    }
-    err.hidden = true;
-    const lines = [
-      `${d.get('from')} - ${d.get('to')}`,
-      `Guests: ${d.get('guests')}`,
-      d.get('room') ? `Room: ${d.get('room')}` : null,
-      '',
-      String(d.get('message') ?? ''),
-      '',
-      String(d.get('name')),
-    ].filter((l) => l !== null);
-    const subject = `${form.dataset.hotel}: ${d.get('from')} - ${d.get('to')}`;
-    location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
-  });
+      field?.setAttribute('aria-invalid', 'true');
+      field?.focus();
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      form.querySelectorAll('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
+      const invalid = form.querySelector<HTMLInputElement>(':invalid');
+      if (invalid) return showError(invalid.validationMessage, invalid);
+      const d = new FormData(form);
+      if (String(d.get('to')) <= String(d.get('from'))) return showError(form.dataset.error ?? '', to);
+      err.hidden = true;
+      const lines = [
+        `${d.get('from')} - ${d.get('to')}`,
+        `Guests: ${d.get('guests')}`,
+        d.get('room') ? `Room: ${d.get('room')}` : null,
+        '',
+        String(d.get('message') ?? ''),
+        '',
+        String(d.get('name')),
+      ].filter((l) => l !== null);
+      const subject = `${form.dataset.hotel}: ${d.get('from')} - ${d.get('to')}`;
+      location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+    });
+  }
 </script>
 
 <style>
-  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; }
-  form {
+  .cols {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    background: var(--c-surface);
-    padding: 1.75rem;
-    border-radius: 8px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
   }
-  label { min-width: 0; display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.9rem; color: var(--c-muted); }
+  .lines { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: 1.25rem; }
+  .lines li { display: flex; gap: 1rem; align-items: flex-start; }
+  .lines small { display: block; color: var(--c-muted); font-size: 0.8125rem; letter-spacing: 0.04em; }
+  .lines a { font-weight: 600; text-decoration: none; }
+  .lines a:hover { text-decoration: underline; }
+  .dir { display: inline-block; margin-top: 0.25rem; font-size: 0.95rem; }
+  .ic {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex: none;
+    border-radius: 50%;
+    background: var(--c-primary-soft);
+    color: var(--c-primary);
+  }
+  .card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-radius: calc(var(--radius) * 1.5);
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+    box-shadow: var(--shadow);
+  }
+  form { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+  label { min-width: 0; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.9rem; font-weight: 500; }
   input, select, textarea {
     width: 100%;
     min-width: 0;
+    min-height: 48px;
     font: inherit;
+    font-weight: 400;
+    font-size: 1rem;
     color: var(--c-text);
     background: var(--c-bg);
     border: 1px solid color-mix(in srgb, var(--c-muted) 35%, transparent);
-    border-radius: 6px;
-    padding: 0.6rem 0.7rem;
+    border-radius: var(--radius-sm);
+    padding: 0.65rem 0.8rem;
+    transition: border-color 150ms, box-shadow 150ms;
   }
+  textarea { resize: vertical; }
+  input:hover, select:hover, textarea:hover { border-color: var(--c-muted); }
+  input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: none;
+    border-color: var(--c-primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-primary) 30%, transparent);
+  }
+  [aria-invalid='true'] { border-color: #B3261E; }
   .full { grid-column: 1 / -1; }
-  .err { color: #B3261E; margin: 0; }
+  .err { color: #B3261E; margin: 0; font-weight: 500; }
+  .note { margin: 0; color: var(--c-muted); font-size: 0.875rem; }
+  .call { display: grid; justify-items: start; gap: 1rem; }
+  .call p { margin: 0; }
+  .call .tel { font: 400 clamp(1.75rem, 4vw, 2.25rem)/1.1 var(--f-heading); }
+  .ic.big { width: 3.5rem; height: 3.5rem; }
+  @media (prefers-color-scheme: dark) {
+    [aria-invalid='true'] { border-color: #F2B8B5; }
+    .err { color: #F2B8B5; }
+  }
+  @media (max-width: 860px) { .cols { grid-template-columns: 1fr; } }
   @media (max-width: 420px) { form { grid-template-columns: 1fr; } }
 </style>

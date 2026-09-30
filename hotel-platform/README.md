@@ -30,6 +30,25 @@ sites/<objekt>    site.config.ts + public/ (slike, favicon)
 Kod se ne mijenja. Ako objekt treba nešto čega nema, dodaj to kao
 opcionalno polje u `SiteConfig` da ga mogu koristiti i ostali.
 
+## Dizajn
+
+Izgled se prilagođava objektu samo kroz `site.config.ts`:
+
+- `theme.colors` / `theme.colorsDark`: šest boja (bg, surface, text, muted, primary, accent).
+  Ostali tonovi (linije, blage pozadine ikona) računaju se iz njih. `onPrimary` je
+  opcionalan ako tekst na primarnoj boji treba biti drugačiji od `surface`.
+- `theme.fonts`: font naslova i teksta.
+- `hero.image`: fotografija naslovnog dijela. Bez nje se crta ilustracija krajolika
+  (brda, šuma, slap, jezero) u bojama teme, pa i objekt bez fotografija izgleda dovršeno.
+- `hero.eyebrow`: kratka oznaka iznad naslova (npr. mjesto).
+- `amenities`: tekst ili `{ label, icon, highlight }`. Ikone su iz Lucide skupa
+  (popis u `packages/core`, `iconNames`); `highlight: true` stavlja pogodnost u traku
+  ispod naslovnog dijela (najviše 4).
+- `restaurant.image`: fotografija restorana (opcionalno).
+
+Na mobitelu se pri skrolanju pojavljuje donja traka s gumbima za poziv i upit.
+Tamna tema prati postavku uređaja. Animacije se isključuju uz `prefers-reduced-motion`.
+
 ## Rezervacije
 
 - `inquiry`: upit recepciji (trenutno, preko e-maila gosta)
