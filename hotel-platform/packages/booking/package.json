@@ -1,0 +1,7 @@
+{
+  "name": "@hp/booking",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": { "@hp/core": "workspace:*" }
+}

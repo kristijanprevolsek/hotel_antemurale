@@ -1,0 +1,53 @@
+---
+import type { Lang } from '@hp/core';
+import { site } from '../site';
+import { useUI } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = useUI(lang);
+const tel = site.contact.phone.replace(/\s/g, '');
+const year = new Date().getFullYear();
+---
+<footer>
+  <div class="wrap grid">
+    <div>
+      <p class="brand">{site.name}</p>
+      <p>{site.contact.address}</p>
+    </div>
+    <nav aria-label={ui.contact}>
+      <a href={`tel:${tel}`}>{site.contact.phone}</a>
+      {site.contact.email && <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>}
+      {site.contact.mapsUrl && <a href={site.contact.mapsUrl} target="_blank" rel="noopener">{ui.directions}</a>}
+    </nav>
+    <ul class="langs" aria-label={ui.language}>
+      {site.languages.map((l) => (
+        <li><a href={`/${l}/`} hreflang={l} aria-current={l === lang ? 'page' : undefined}>{l.toUpperCase()}</a></li>
+      ))}
+    </ul>
+  </div>
+  <p class="wrap copy">© {year} {site.name}</p>
+</footer>
+
+<style>
+  footer {
+    padding-block: 3.5rem 2rem;
+    border-top: 1px solid var(--c-line);
+    color: var(--c-muted);
+    font-size: 0.95rem;
+  }
+  .grid { display: grid; grid-template-columns: 2fr 1.5fr 1fr; gap: 2rem; }
+  .brand { font: 600 1.5rem var(--f-heading); color: var(--c-text); margin-bottom: 0.25rem; }
+  nav { display: flex; flex-direction: column; gap: 0.25rem; }
+  a { color: var(--c-text); text-decoration: none; display: inline-flex; align-items: center; min-height: 44px; }
+  a:hover { color: var(--c-primary); }
+  .langs { display: flex; gap: 0.25rem; list-style: none; padding: 0; margin: 0; justify-content: flex-end; }
+  .langs a { min-width: 44px; justify-content: center; color: var(--c-muted); }
+  .langs a[aria-current] { color: var(--c-text); font-weight: 600; }
+  .copy { margin-top: 2rem; font-size: 0.85rem; max-width: none; }
+  @media (max-width: 760px) {
+    .grid { grid-template-columns: 1fr; gap: 1rem; }
+    .langs { justify-content: flex-start; }
+    footer { padding-bottom: 6rem; } /* mjesto za donju traku na mobitelu */
+  }
+</style>

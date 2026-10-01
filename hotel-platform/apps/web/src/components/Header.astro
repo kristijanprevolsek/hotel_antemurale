@@ -1,0 +1,140 @@
+---
+import type { Lang } from '@hp/core';
+import { site } from '../site';
+import { useUI } from '../i18n';
+import Icon from './Icon.astro';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = useUI(lang);
+const langNames: Record<string, string> = {
+  hr: 'Hrvatski', en: 'English', de: 'Deutsch', it: 'Italiano', ko: '한국어', zh: '中文',
+};
+---
+<header class="bar" data-header>
+  <div class="wrap row">
+    <a class="brand" href={`/${lang}/`}>{site.name}</a>
+
+    <nav id="site-nav" aria-label="Main">
+      <a href="#rooms">{ui.rooms}</a>
+      {site.restaurant && <a href="#restaurant">{ui.restaurant}</a>}
+      <a href="#contact">{ui.contact}</a>
+      <ul class="langs" aria-label={ui.language}>
+        {site.languages.map((l) => (
+          <li>
+            <a href={`/${l}/`} hreflang={l} lang={l} title={langNames[l]} aria-current={l === lang ? 'page' : undefined}>{l}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <a class="btn cta" href="#contact">{ui.book}</a>
+    <button class="toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label={ui.menu}>
+      <span class="i-menu"><Icon name="menu" /></span>
+      <span class="i-close"><Icon name="close" /></span>
+    </button>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]')!;
+  const toggle = header.querySelector<HTMLButtonElement>('.toggle')!;
+  const setOpen = (open: boolean) => {
+    toggle.setAttribute('aria-expanded', String(open));
+    header.classList.toggle('open', open);
+  };
+  toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  header.querySelectorAll('nav a[href^="#"]').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && header.classList.contains('open')) {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+  // Sjena tek kad stranica krene ispod zaglavlja
+  const onScroll = () => header.classList.toggle('scrolled', scrollY > 8);
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
+
+<style>
+  .bar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--c-bg) 82%, transparent);
+    backdrop-filter: saturate(1.4) blur(14px);
+    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 200ms var(--ease), box-shadow 200ms var(--ease);
+  }
+  .bar.scrolled { border-bottom-color: var(--c-line); }
+  .row { display: flex; align-items: center; gap: 1.75rem; min-height: var(--header-h); }
+  .brand {
+    font: 600 1.5rem/1 var(--f-heading);
+    color: var(--c-text);
+    text-decoration: none;
+    margin-right: auto;
+    letter-spacing: -0.01em;
+  }
+  nav { display: flex; align-items: center; gap: 1.75rem; }
+  nav > a {
+    color: var(--c-text);
+    text-decoration: none;
+    font-weight: 500;
+    padding-block: 0.5rem;
+    background: linear-gradient(var(--c-primary), var(--c-primary)) no-repeat left bottom / 0 2px;
+    transition: background-size 250ms var(--ease), color 200ms;
+  }
+  nav > a:hover { color: var(--c-primary); background-size: 100% 2px; }
+  .langs { display: flex; gap: 0.25rem; list-style: none; margin: 0; padding: 0 0 0 1.25rem; border-left: 1px solid var(--c-line); }
+  .langs a {
+    display: grid;
+    place-items: center;
+    min-width: 44px;
+    min-height: 44px;
+    color: var(--c-muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-radius: var(--radius-sm);
+  }
+  .langs a:hover { color: var(--c-text); background: var(--c-primary-soft); }
+  .langs a[aria-current] { color: var(--c-text); font-weight: 600; }
+  .cta { min-height: 44px; padding-block: 0.55em; }
+  .toggle { display: none; }
+
+  @media (max-width: 860px) {
+    .row { gap: 0.75rem; }
+    .toggle {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--c-line);
+      border-radius: 999px;
+      background: var(--c-surface);
+      color: var(--c-text);
+      cursor: pointer;
+    }
+    .toggle .i-close, .open .toggle .i-menu { display: none; }
+    .open .toggle .i-close { display: contents; }
+    nav {
+      display: none;
+      position: absolute;
+      inset: 100% 0 auto;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 0.5rem 1.25rem 1.25rem;
+      background: var(--c-bg);
+      border-bottom: 1px solid var(--c-line);
+      box-shadow: var(--shadow);
+    }
+    .open nav { display: flex; }
+    nav > a { padding: 0.9rem 0; border-bottom: 1px solid var(--c-line); font-size: 1.125rem; background: none; }
+    .langs { padding: 0.75rem 0 0; border: 0; }
+  }
+  @media (max-width: 420px) { .cta { display: none; } }
+</style>
