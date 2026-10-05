@@ -3,6 +3,11 @@ import type { Lang } from '@hp/core';
 // Tekstovi sučelja, isti za sve objekte. Sadržaj objekta je u site.config.ts.
 const ui = {
   en: {
+    gallery: 'Gallery',
+    close: 'Close',
+    prev: 'Previous photo',
+    next: 'Next photo',
+    photos: (n: number) => `${n} photos`,
     askHouse: 'Send an inquiry',
     stay: 'Accommodation',
     otherRooms: 'Other rooms',
@@ -40,6 +45,11 @@ const ui = {
     datesError: 'Departure must be after arrival.',
   },
   hr: {
+    gallery: 'Galerija',
+    close: 'Zatvori',
+    prev: 'Prethodna fotografija',
+    next: 'Sljedeća fotografija',
+    photos: (n: number) => `${n} ${n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 'fotografije' : 'fotografija'}`,
     askHouse: 'Pošaljite upit',
     stay: 'Smještaj',
     otherRooms: 'Ostale sobe',
@@ -77,6 +87,11 @@ const ui = {
     datesError: 'Odlazak mora biti nakon dolaska.',
   },
   de: {
+    gallery: 'Galerie',
+    close: 'Schließen',
+    prev: 'Vorheriges Foto',
+    next: 'Nächstes Foto',
+    photos: (n: number) => `${n} Fotos`,
     askHouse: 'Anfrage senden',
     stay: 'Unterkunft',
     otherRooms: 'Weitere Zimmer',

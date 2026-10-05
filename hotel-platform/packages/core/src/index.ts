@@ -50,12 +50,21 @@ export interface Landmark {
   distanceM: number;
 }
 
+/** Fotografija iz public/; wide zauzima dva stupca u mreži */
+export interface GalleryItem {
+  src: string;
+  alt: Localized;
+  wide?: boolean;
+}
+
 export interface Restaurant {
   title: Localized;
   description: Localized;
   openToPublic: boolean;
   hours?: Localized;
   image?: string;
+  /** Fotografije hrane i restorana, prikazuju se unutar odjeljka Restoran */
+  gallery?: GalleryItem[];
 }
 
 export type BookingConfig =
@@ -103,6 +112,8 @@ export interface SiteConfig {
   rooms: Room[];
   /** Ako postoji, odjeljak Smještaj prikazuje kuće redom, svaku sa svojim sobama */
   houses?: House[];
+  /** Fotografije za galeriju (putanje iz public/) */
+  gallery?: GalleryItem[];
   restaurant?: Restaurant;
   booking: BookingConfig;
   assistant?: { enabled: boolean; knowledge: Localized };

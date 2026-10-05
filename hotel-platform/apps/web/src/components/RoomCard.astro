@@ -8,13 +8,18 @@ import Landscape from './Landscape.astro';
 interface Props { lang: Lang; room: Room }
 const { lang, room } = Astro.props;
 const ui = useUI(lang);
+const name = t(room.name, lang);
 ---
 <article class="card" data-reveal>
   <div class="media">
-    {room.images[0]
-      ? <img src={room.images[0]} alt={t(room.name, lang)} loading="lazy" decoding="async" width="800" height="600" />
-      : <Landscape uid={`room-${room.id}`} />}
+    {room.images[0] ? (
+      <a href={room.images[0]} data-lb={`room-${room.id}`} data-alt={name} aria-label={`${name}: ${ui.photos(room.images.length)}`}>
+        <img src={room.images[0]} alt={name} loading="lazy" decoding="async" width="800" height="600" />
+      </a>
+    ) : <Landscape uid={`room-${room.id}`} />}
+    {room.images.slice(1).map((src) => <a href={src} data-lb={`room-${room.id}`} data-alt={name} hidden></a>)}
     {room.priceFrom && <span class="price">{ui.from(room.priceFrom)}</span>}
+    {room.images.length > 1 && <span class="count" aria-hidden="true">{ui.photos(room.images.length)}</span>}
   </div>
   <div class="body">
     <h3>{t(room.name, lang)}</h3>
@@ -42,7 +47,19 @@ const ui = useUI(lang);
   }
   .card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
   .media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--c-primary-soft); }
+  .media > a { display: block; height: 100%; cursor: zoom-in; }
   .media img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms var(--ease); }
+  .count {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    background: rgb(0 0 0 / 0.55);
+    color: #fff;
+    font-size: 0.8rem;
+    pointer-events: none;
+  }
   .card:hover .media img { transform: scale(1.04); }
   .price {
     position: absolute;

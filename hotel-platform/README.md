@@ -45,6 +45,13 @@ Izgled se prilagođava objektu samo kroz `site.config.ts`:
   (popis u `packages/core`, `iconNames`); `highlight: true` stavlja pogodnost u traku
   ispod naslovnog dijela (najviše 4).
 - `restaurant.image`: fotografija restorana (opcionalno).
+- `restaurant.gallery` i `gallery`: mreže fotografija (`{ src, alt, wide }`) za hranu
+  i restoran te za opću galeriju. Mreža ima 4 stupca (2 na mobitelu), a `wide`
+  zauzima dva. Raspored bez rupa dobiješ kad je zbroj (obična = 1, široka = 2)
+  djeljiv s 4.
+- Fotografije idu u `sites/<objekt>/public/images/`, po mogućnosti u WebP-u, širine
+  oko 1000 do 1600 px. Klik na bilo koju fotografiju (soba, kuća, galerija) otvara
+  preglednik koji lista sve fotografije iz iste grupe.
 - `houses`: za integralne hotele s više zgrada. Odjeljak se tada zove Smještaj,
   ima numerirane kuće s brzim poveznicama, a sobe se vežu na kuću preko
   `rooms[].houseId`. Kuća bez soba prikazuje samo opis i gumb za upit. Sobe

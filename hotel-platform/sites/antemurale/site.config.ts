@@ -42,6 +42,12 @@ export default defineSite({
   },
 
   hero: {
+    image: '/images/hero.webp',
+    imageAlt: {
+      hr: 'Vrt i terasa ispred kuće hotela Antemurale',
+      en: 'Garden and terrace in front of a Hotel Antemurale house',
+      de: 'Garten und Terrasse vor einem Haus des Hotels Antemurale',
+    },
     eyebrow: { hr: 'Rastovača · Plitvička Jezera', en: 'Rastovača · Plitvice Lakes', de: 'Rastovača · Plitvicer Seen' },
     title: {
       hr: 'Pješice do Plitvičkih jezera',
@@ -77,36 +83,37 @@ export default defineSite({
   houses: [
     {
       id: 'nove-kuce',
+      image: '/images/nove-kuce.webp',
       name: { hr: 'Nove kuće', en: 'New houses', de: 'Neue Häuser' },
       description: {
-        hr: 'Dvokrevetne sobe u novim kućama hotela.',
-        en: 'Double rooms in the hotel’s new houses.',
-        de: 'Doppelzimmer in den neuen Häusern des Hotels.',
+        hr: 'Dvokrevetne sobe i dvije sobe s vlastitom saunom u novim kućama hotela.',
+        en: 'Double rooms and two rooms with a private sauna in the hotel’s new houses.',
+        de: 'Doppelzimmer und zwei Zimmer mit eigener Sauna in den neuen Häusern des Hotels.',
       },
     },
     {
       id: 'studio',
+      image: '/images/studio.webp',
       name: { hr: 'Studio apartman', en: 'Studio apartment', de: 'Studio-Apartment' },
       description: {
-        hr: 'Zaseban studio apartman.',
-        en: 'A separate studio apartment.',
-        de: 'Ein separates Studio-Apartment.',
+        hr: 'Zaseban studio apartman u vlastitoj kućici.',
+        en: 'A separate studio apartment in its own small house.',
+        de: 'Ein separates Studio-Apartment in einem eigenen kleinen Haus.',
       },
     },
     {
       id: 'danica',
+      image: '/images/danica.webp',
       name: { hr: 'Pansion Danica', en: 'Pansion Danica', de: 'Pension Danica' },
       description: {
-        hr: 'Stara kuća hotela Antemurale.',
-        en: 'The old house of Hotel Antemurale.',
-        de: 'Das alte Haus des Hotels Antemurale.',
+        hr: 'Stara kuća hotela Antemurale s dvokrevetnim i trokrevetnim sobama.',
+        en: 'The old house of Hotel Antemurale, with double and triple rooms.',
+        de: 'Das alte Haus des Hotels Antemurale mit Doppel- und Dreibettzimmern.',
       },
     },
   ],
 
-  // TODO: stvarne sobe, kvadrature, cijene i fotografije.
-  // Obiteljska soba i soba sa saunom nemaju houseId dok ne potvrdimo u kojoj su kući,
-  // pa se prikazuju pod "Ostale sobe".
+  // TODO: kvadrature i cijene
   rooms: [
     {
       id: 'double',
@@ -122,38 +129,88 @@ export default defineSite({
         { hr: 'Klima', en: 'Air conditioning', de: 'Klimaanlage' },
         { hr: 'Sef', en: 'Safe', de: 'Safe' },
       ],
-      images: [],
-    },
-    {
-      id: 'family',
-      name: { hr: 'Obiteljska soba', en: 'Family room', de: 'Familienzimmer' },
-      description: {
-        hr: 'Prostrana soba za obitelji, blizu vrta.',
-        en: 'A spacious room for families, close to the garden.',
-        de: 'Geräumiges Zimmer für Familien, nahe dem Garten.',
-      },
-      maxGuests: 4,
-      features: [
-        { hr: 'Klima', en: 'Air conditioning', de: 'Klimaanlage' },
-        { hr: 'Terasa', en: 'Patio', de: 'Terrasse' },
+      images: [
+        '/images/nove-kuce-dvokrevetna-1.webp',
+        '/images/nove-kuce-dvokrevetna-2.webp',
+        '/images/nove-kuce-dvokrevetna-kupaonica.webp',
       ],
-      images: [],
     },
     {
       id: 'sauna',
+      houseId: 'nove-kuce',
       name: { hr: 'Soba s vlastitom saunom', en: 'Room with private sauna', de: 'Zimmer mit eigener Sauna' },
       description: {
-        hr: 'Za opuštanje nakon cijelog dana hodanja po parku.',
-        en: 'For unwinding after a full day of walking in the park.',
-        de: 'Zum Entspannen nach einem langen Tag im Park.',
+        hr: 'Dvije sobe u prizemlju, svaka s vlastitom saunom. Za opuštanje nakon cijelog dana hodanja po parku.',
+        en: 'Two ground-floor rooms, each with its own sauna. For unwinding after a full day of walking in the park.',
+        de: 'Zwei Zimmer im Erdgeschoss, jedes mit eigener Sauna. Zum Entspannen nach einem langen Tag im Park.',
       },
-      maxGuests: 2,
       features: [
         { hr: 'Privatna sauna', en: 'Private sauna', de: 'Private Sauna' },
-        { hr: 'Klima', en: 'Air conditioning', de: 'Klimaanlage' },
+        { hr: 'Prizemlje', en: 'Ground floor', de: 'Erdgeschoss' },
       ],
-      images: [],
+      images: ['/images/sauna-soba-1.webp', '/images/sauna.webp', '/images/sauna-soba-2.webp'],
     },
+    {
+      id: 'studio',
+      houseId: 'studio',
+      name: { hr: 'Studio apartman', en: 'Studio apartment', de: 'Studio-Apartment' },
+      description: {
+        hr: 'Studio s kuhinjom i galerijom za spavanje.',
+        en: 'A studio with a kitchen and a sleeping loft.',
+        de: 'Ein Studio mit Küche und Schlafgalerie.',
+      },
+      features: [
+        { hr: 'Kuhinja', en: 'Kitchen', de: 'Küche' },
+        { hr: 'Galerija', en: 'Sleeping loft', de: 'Schlafgalerie' },
+      ],
+      images: ['/images/studio-1.webp', '/images/studio-2.webp', '/images/studio-terasa.webp'],
+    },
+    {
+      id: 'danica-double',
+      houseId: 'danica',
+      name: { hr: 'Dvokrevetna soba', en: 'Double room', de: 'Doppelzimmer' },
+      description: {
+        hr: 'Dvokrevetna soba u Pansionu Danica.',
+        en: 'A double room in Pansion Danica.',
+        de: 'Ein Doppelzimmer in der Pension Danica.',
+      },
+      maxGuests: 2,
+      features: [],
+      images: ['/images/danica-dvokrevetna.webp'],
+    },
+    {
+      id: 'danica-triple',
+      houseId: 'danica',
+      name: { hr: 'Trokrevetna soba', en: 'Triple room', de: 'Dreibettzimmer' },
+      description: {
+        hr: 'Trokrevetna soba u Pansionu Danica.',
+        en: 'A triple room in Pansion Danica.',
+        de: 'Ein Dreibettzimmer in der Pension Danica.',
+      },
+      maxGuests: 3,
+      features: [],
+      images: ['/images/danica-trokrevetna.webp'],
+    },
+    {
+      id: 'danica-terrace',
+      houseId: 'danica',
+      name: { hr: 'Dvokrevetna soba s terasom', en: 'Double room with terrace', de: 'Doppelzimmer mit Terrasse' },
+      description: {
+        hr: 'Tri ljepše uređene dvokrevetne sobe s terasom.',
+        en: 'Three more refined double rooms with a terrace.',
+        de: 'Drei schöner eingerichtete Doppelzimmer mit Terrasse.',
+      },
+      maxGuests: 2,
+      features: [{ hr: 'Terasa', en: 'Terrace', de: 'Terrasse' }],
+      images: ['/images/danica-terasa-soba.webp', '/images/danica-terasa.webp'],
+    },
+  ],
+
+  gallery: [
+    { src: '/images/jacuzzi.webp', wide: true, alt: { hr: 'Jacuzzi na otvorenom i roštilj u vrtu', en: 'Outdoor jacuzzi and barbecue in the garden', de: 'Whirlpool im Freien und Grill im Garten' } },
+    { src: '/images/aktivnosti.webp', wide: true, alt: { hr: 'Boćalište i streljana na livadi', en: 'Bocce court and archery range on the meadow', de: 'Bocciabahn und Bogenschießplatz auf der Wiese' } },
+    { src: '/images/vecer-terasa.webp', wide: true, alt: { hr: 'Terasa navečer', en: 'The terrace in the evening', de: 'Die Terrasse am Abend' } },
+    { src: '/images/zima.webp', wide: true, alt: { hr: 'Pansion Danica zimi', en: 'Pansion Danica in winter', de: 'Pension Danica im Winter' } },
   ],
 
   restaurant: {
@@ -164,6 +221,21 @@ export default defineSite({
       de: 'Regionale Küche aus der Lika, Terrasse und Feuerstelle im Freien. Das Restaurant ist auch für Besucher geöffnet, die nicht bei uns übernachten.',
     },
     openToPublic: true,
+    image: '/images/restoran.webp',
+    gallery: [
+      { src: '/images/restoran-2.webp', wide: true, alt: { hr: 'Postavljeni stolovi u restoranu', en: 'Tables set in the restaurant', de: 'Gedeckte Tische im Restaurant' } },
+      { src: '/images/hrana-plata.webp', alt: { hr: 'Plata domaćih delicija', en: 'Platter of local delicacies', de: 'Platte mit regionalen Spezialitäten' } },
+      { src: '/images/jelo.webp', alt: { hr: 'Jelo iz restorana', en: 'A dish from the restaurant', de: 'Ein Gericht aus dem Restaurant' } },
+      { src: '/images/hrana-riba.webp', alt: { hr: 'Riba s povrćem', en: 'Fish with vegetables', de: 'Fisch mit Gemüse' } },
+      { src: '/images/hrana-narezak.webp', wide: true, alt: { hr: 'Narezak i sirevi', en: 'Cold cuts and cheese', de: 'Aufschnitt und Käse' } },
+      { src: '/images/dorucak.webp', alt: { hr: 'Doručak', en: 'Breakfast', de: 'Frühstück' } },
+      { src: '/images/hrana-povrce.webp', alt: { hr: 'Svježe povrće', en: 'Fresh vegetables', de: 'Frisches Gemüse' } },
+      { src: '/images/hrana-kotlic.webp', alt: { hr: 'Kuhanje u kotliću na otvorenom', en: 'Cooking in a pot over an open fire', de: 'Kochen im Kessel über offenem Feuer' } },
+      { src: '/images/restoran-3.webp', wide: true, alt: { hr: 'Restoran', en: 'The restaurant', de: 'Das Restaurant' } },
+      { src: '/images/bar.webp', alt: { hr: 'Bar s pogledom na terasu', en: 'Bar overlooking the terrace', de: 'Bar mit Blick auf die Terrasse' } },
+      { src: '/images/restoran-bar.webp', alt: { hr: 'Blagovaonica i bar', en: 'Dining room and bar', de: 'Speisesaal und Bar' } },
+      { src: '/images/restoran-stol.webp', wide: true, alt: { hr: 'Stol postavljen za večeru', en: 'A table set for dinner', de: 'Ein für das Abendessen gedeckter Tisch' } },
+    ],
     hours: undefined, // TODO: radno vrijeme
   },
 

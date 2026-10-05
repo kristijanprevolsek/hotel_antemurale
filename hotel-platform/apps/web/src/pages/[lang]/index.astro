@@ -11,6 +11,8 @@ import Restaurant from '../../components/Restaurant.astro';
 import Inquiry from '../../components/Inquiry.astro';
 import Footer from '../../components/Footer.astro';
 import MobileBar from '../../components/MobileBar.astro';
+import Gallery from '../../components/Gallery.astro';
+import Lightbox from '../../components/Lightbox.astro';
 
 export function getStaticPaths() {
   return site.languages.map((lang) => ({ params: { lang } }));
@@ -29,8 +31,10 @@ const lang = Astro.params.lang as Lang;
     <Rooms lang={lang} />
     <Amenities lang={lang} />
     <Restaurant lang={lang} />
+    <Gallery lang={lang} />
     <Inquiry lang={lang} />
   </main>
   <Footer lang={lang} />
   <MobileBar lang={lang} />
+  <Lightbox lang={lang} />
 </BaseLayout>
