@@ -45,6 +45,10 @@ Izgled se prilagođava objektu samo kroz `site.config.ts`:
   (popis u `packages/core`, `iconNames`); `highlight: true` stavlja pogodnost u traku
   ispod naslovnog dijela (najviše 4).
 - `restaurant.image`: fotografija restorana (opcionalno).
+- `houses`: za integralne hotele s više zgrada. Odjeljak se tada zove Smještaj,
+  ima numerirane kuće s brzim poveznicama, a sobe se vežu na kuću preko
+  `rooms[].houseId`. Kuća bez soba prikazuje samo opis i gumb za upit. Sobe
+  bez `houseId` prikazuju se na kraju pod "Ostale sobe".
 
 Na mobitelu se pri skrolanju pojavljuje donja traka s gumbima za poziv i upit.
 Tamna tema prati postavku uređaja. Animacije se isključuju uz `prefers-reduced-motion`.

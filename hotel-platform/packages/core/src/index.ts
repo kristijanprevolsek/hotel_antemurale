@@ -23,12 +23,24 @@ export interface Room {
   id: string;
   name: Localized;
   description: Localized;
-  maxGuests: number;
+  /** Izostavi dok nije potvrđeno; tada se ne prikazuje */
+  maxGuests?: number;
   sizeM2?: number;
   features: Localized[];
   images: string[];
   /** Cijena od, u EUR po noći */
   priceFrom?: number;
+  /** Kuća u kojoj je jedinica (House.id), za integralne hotele s više zgrada */
+  houseId?: string;
+}
+
+/** Zgrada integralnog hotela. Sobe se na stranici grupiraju po kućama. */
+export interface House {
+  id: string;
+  name: Localized;
+  description?: Localized;
+  address?: string;
+  image?: string;
 }
 
 /** Glavna znamenitost do koje se ide pješice (park, plaža, stari grad...) */
@@ -89,6 +101,8 @@ export interface SiteConfig {
   landmark?: Landmark;
   amenities: Amenity[];
   rooms: Room[];
+  /** Ako postoji, odjeljak Smještaj prikazuje kuće redom, svaku sa svojim sobama */
+  houses?: House[];
   restaurant?: Restaurant;
   booking: BookingConfig;
   assistant?: { enabled: boolean; knowledge: Localized };

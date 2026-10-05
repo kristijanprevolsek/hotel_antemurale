@@ -72,10 +72,45 @@ export default defineSite({
     { icon: 'fireplace', label: { hr: 'Vanjski kamin', en: 'Outdoor fireplace', de: 'Kamin im Freien' } },
   ],
 
-  // TODO: stvarne sobe, kvadrature, cijene i fotografije
+  // Kuće integralnog hotela, redom kako se prikazuju u odjeljku Smještaj.
+  // TODO: opisi, adrese i fotografije (image) svake kuće
+  houses: [
+    {
+      id: 'nove-kuce',
+      name: { hr: 'Nove kuće', en: 'New houses', de: 'Neue Häuser' },
+      description: {
+        hr: 'Dvokrevetne sobe u novim kućama hotela.',
+        en: 'Double rooms in the hotel’s new houses.',
+        de: 'Doppelzimmer in den neuen Häusern des Hotels.',
+      },
+    },
+    {
+      id: 'studio',
+      name: { hr: 'Studio apartman', en: 'Studio apartment', de: 'Studio-Apartment' },
+      description: {
+        hr: 'Zaseban studio apartman.',
+        en: 'A separate studio apartment.',
+        de: 'Ein separates Studio-Apartment.',
+      },
+    },
+    {
+      id: 'danica',
+      name: { hr: 'Pansion Danica', en: 'Pansion Danica', de: 'Pension Danica' },
+      description: {
+        hr: 'Stara kuća hotela Antemurale.',
+        en: 'The old house of Hotel Antemurale.',
+        de: 'Das alte Haus des Hotels Antemurale.',
+      },
+    },
+  ],
+
+  // TODO: stvarne sobe, kvadrature, cijene i fotografije.
+  // Obiteljska soba i soba sa saunom nemaju houseId dok ne potvrdimo u kojoj su kući,
+  // pa se prikazuju pod "Ostale sobe".
   rooms: [
     {
       id: 'double',
+      houseId: 'nove-kuce',
       name: { hr: 'Dvokrevetna soba', en: 'Double room', de: 'Doppelzimmer' },
       description: {
         hr: 'Klimatizirana soba s pogledom na vrt i vlastitom kupaonicom.',

@@ -1,0 +1,84 @@
+---
+import type { Lang, Room } from '@hp/core';
+import { t } from '@hp/core';
+import { useUI } from '../i18n';
+import Icon from './Icon.astro';
+import Landscape from './Landscape.astro';
+
+interface Props { lang: Lang; room: Room }
+const { lang, room } = Astro.props;
+const ui = useUI(lang);
+---
+<article class="card" data-reveal>
+  <div class="media">
+    {room.images[0]
+      ? <img src={room.images[0]} alt={t(room.name, lang)} loading="lazy" decoding="async" width="800" height="600" />
+      : <Landscape uid={`room-${room.id}`} />}
+    {room.priceFrom && <span class="price">{ui.from(room.priceFrom)}</span>}
+  </div>
+  <div class="body">
+    <h3>{t(room.name, lang)}</h3>
+    <p>{t(room.description, lang)}</p>
+    <ul class="chips">
+      {room.maxGuests && <li><Icon name="guests" />{ui.upTo(room.maxGuests)}</li>}
+      {room.sizeM2 && <li>{room.sizeM2} m²</li>}
+      {room.features.map((f) => <li>{t(f, lang)}</li>)}
+    </ul>
+    <a class="ask" href="#contact" data-room={t(room.name, lang)}>
+      {ui.askRoom}<Icon name="arrow-right" />
+    </a>
+  </div>
+</article>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: box-shadow 250ms var(--ease), transform 250ms var(--ease);
+  }
+  .card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+  .media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--c-primary-soft); }
+  .media img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms var(--ease); }
+  .card:hover .media img { transform: scale(1.04); }
+  .price {
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    background: var(--c-surface);
+    color: var(--c-text);
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: var(--shadow);
+  }
+  .body { display: flex; flex-direction: column; flex: 1; padding: 1.5rem; }
+  .body p { color: var(--c-muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0; margin: 0 0 1.5rem; }
+  .chips:empty { display: none; }
+  .chips li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    background: var(--c-primary-soft);
+    font-size: 0.875rem;
+  }
+  .chips :global(.icon) { width: 1rem; height: 1rem; color: var(--c-primary); }
+  .ask {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .ask :global(.icon) { transition: transform 200ms var(--ease); }
+  .ask:hover :global(.icon) { transform: translateX(4px); }
+</style>

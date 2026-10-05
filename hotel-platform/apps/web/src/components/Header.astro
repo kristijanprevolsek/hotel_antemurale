@@ -16,7 +16,7 @@ const langNames: Record<string, string> = {
     <a class="brand" href={`/${lang}/`}>{site.name}</a>
 
     <nav id="site-nav" aria-label="Main">
-      <a href="#rooms">{ui.rooms}</a>
+      <a href="#rooms">{site.houses?.length ? ui.stay : ui.rooms}</a>
       {site.restaurant && <a href="#restaurant">{ui.restaurant}</a>}
       <a href="#contact">{ui.contact}</a>
       <ul class="langs" aria-label={ui.language}>

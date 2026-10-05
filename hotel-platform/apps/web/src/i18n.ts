@@ -3,6 +3,9 @@ import type { Lang } from '@hp/core';
 // Tekstovi sučelja, isti za sve objekte. Sadržaj objekta je u site.config.ts.
 const ui = {
   en: {
+    askHouse: 'Send an inquiry',
+    stay: 'Accommodation',
+    otherRooms: 'Other rooms',
     menu: 'Menu',
     language: 'Language',
     skip: 'Skip to content',
@@ -37,6 +40,9 @@ const ui = {
     datesError: 'Departure must be after arrival.',
   },
   hr: {
+    askHouse: 'Pošaljite upit',
+    stay: 'Smještaj',
+    otherRooms: 'Ostale sobe',
     menu: 'Izbornik',
     language: 'Jezik',
     skip: 'Preskoči na sadržaj',
@@ -71,6 +77,9 @@ const ui = {
     datesError: 'Odlazak mora biti nakon dolaska.',
   },
   de: {
+    askHouse: 'Anfrage senden',
+    stay: 'Unterkunft',
+    otherRooms: 'Weitere Zimmer',
     menu: 'Menü',
     language: 'Sprache',
     skip: 'Zum Inhalt springen',

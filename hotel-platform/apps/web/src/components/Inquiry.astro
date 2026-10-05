@@ -46,7 +46,19 @@ const tel = site.contact.phone.replace(/\s/g, '');
         <label>{ui.room}
           <select name="room">
             <option value="">{ui.anyRoom}</option>
-            {site.rooms.map((r) => <option value={t(r.name, lang)}>{t(r.name, lang)}</option>)}
+            {site.houses?.length
+              ? site.houses.map((h) => {
+                  const rooms = site.rooms.filter((r) => r.houseId === h.id);
+                  return rooms.length
+                    ? <optgroup label={t(h.name, lang)}>{rooms.map((r) => <option value={t(r.name, lang)}>{t(r.name, lang)}</option>)}</optgroup>
+                    : <option value={t(h.name, lang)}>{t(h.name, lang)}</option>;
+                })
+              : site.rooms.map((r) => <option value={t(r.name, lang)}>{t(r.name, lang)}</option>)}
+            {site.houses?.length
+              ? site.rooms
+                  .filter((r) => !site.houses!.some((h) => h.id === r.houseId))
+                  .map((r) => <option value={t(r.name, lang)}>{t(r.name, lang)}</option>)
+              : null}
           </select>
         </label>
         <label class="full">{ui.name}<input name="name" autocomplete="name" required /></label>
