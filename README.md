@@ -57,8 +57,13 @@ Formspree, Netlify Forms ili vaš sustav za rezervacije.
 
 ## Objava
 
-- **GitHub Pages**: priložen je workflow `.github/workflows/deploy.yml` koji pri svakom
-  pushu na granu `main` izgradi i objavi stranicu. U repozitoriju uključite
-  *Settings → Pages → Source: GitHub Actions*.
+> Nova stranica je u mapi `hotel-platform/` (vidi njezin README). Workflow
+> `.github/workflows/build.yml` pri svakom pushu na `main` i za svaki PR provjerava da se
+> ona gradi bez grešaka. Objavu radi hosting, npr. Cloudflare Pages s postavkama: root
+> `hotel-platform`, build `pnpm build`, izlaz `apps/web/dist/antemurale`, varijabla
+> `HP_SITE=antemurale`.
+
+Stara React stranica u korijenu:
+
 - **Netlify / Cloudflare Pages / Vercel**: build naredba `npm run build`, izlazna mapa `dist`.
 - **Klasični hosting**: pokrenite `npm run build` i prenesite sadržaj mape `dist/`.
