@@ -1,0 +1,36 @@
+name: Build hotel-platform
+
+# Provjera da se stranica gradi bez grešaka. Objavu radi hosting (npr. Cloudflare Pages),
+# koji sam gradi stranicu iz repozitorija.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: hotel-platform
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: hotel-platform/package.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: hotel-platform/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+        env:
+          HP_SITE: antemurale
+      - name: Provjera tipova
+        working-directory: hotel-platform/apps/web
+        run: pnpm dlx @astrojs/check@0.9 --minimumFailingSeverity error
