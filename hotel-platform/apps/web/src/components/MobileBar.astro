@@ -1,0 +1,66 @@
+---
+import type { Lang } from '@hp/core';
+import { site } from '../site';
+import { useUI } from '../i18n';
+import Icon from './Icon.astro';
+
+// Donja traka na mobitelu: rezervacija je uvijek na dohvat palca.
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const ui = useUI(lang);
+const tel = site.contact.phone.replace(/\s/g, '');
+---
+<div class="mbar" data-mbar>
+  <a class="call" href={`tel:${tel}`} aria-label={ui.call}><Icon name="phone" /></a>
+  <a class="btn" href="#contact">{ui.book}</a>
+</div>
+
+<script>
+  // Sakrij traku u naslovnom dijelu i kad je obrazac već na ekranu
+  const bar = document.querySelector<HTMLElement>('[data-mbar]')!;
+  const contact = document.querySelector('#contact');
+  let contactVisible = false;
+  const update = () => bar.classList.toggle('show', scrollY > innerHeight * 0.6 && !contactVisible);
+  if (contact && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => {
+      contactVisible = e.isIntersecting;
+      update();
+    }).observe(contact);
+  }
+  addEventListener('scroll', update, { passive: true });
+  update();
+</script>
+
+<style>
+  .mbar { display: none; }
+  @media (max-width: 760px) {
+    .mbar {
+      position: fixed;
+      inset: auto 0 0;
+      z-index: 40;
+      display: flex;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
+      background: color-mix(in srgb, var(--c-surface) 88%, transparent);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid var(--c-line);
+      transform: translateY(110%);
+      visibility: hidden;
+      transition: transform 250ms var(--ease), visibility 0s linear 250ms;
+    }
+    .mbar.show { transform: none; visibility: visible; transition: transform 300ms var(--ease); }
+    .btn { flex: 1; }
+    .call {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      flex: none;
+      border-radius: 50%;
+      border: 1px solid var(--c-line);
+      color: var(--c-primary);
+      background: var(--c-surface);
+    }
+  }
+</style>

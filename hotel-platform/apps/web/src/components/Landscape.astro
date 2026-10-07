@@ -1,0 +1,70 @@
+---
+// Ilustracija krajolika (brda, šuma, jezero) u bojama teme.
+// Zamjena za fotografiju dok je objekt nema; uz druge boje teme izgleda kao drugi krajolik.
+interface Props { class?: string; uid?: string }
+// uid razlikuje gradijente kad je ilustracija više puta na stranici
+const { class: cls, uid = 'scape' } = Astro.props;
+
+// Jele: [x, podnožje, visina]
+const pines: [number, number, number][] = [
+  [30, 318, 70], [62, 322, 92], [96, 316, 64], [128, 324, 84], [168, 320, 58],
+  [392, 322, 66], [424, 318, 96], [458, 324, 72], [492, 320, 88], [530, 322, 62], [566, 318, 80],
+];
+---
+<svg class:list={['scape', cls]} viewBox="0 0 600 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id={`${uid}-sky`} x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" class="sky-top" />
+      <stop offset="1" class="sky-bottom" />
+    </linearGradient>
+    <linearGradient id={`${uid}-lake`} x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" class="lake-top" />
+      <stop offset="1" class="lake-bottom" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="460" fill={`url(#${uid}-sky)`} />
+  <circle class="sun" cx="438" cy="118" r="46" />
+  <path class="far" d="M0 230 L70 186 L128 210 L196 150 L262 204 L318 172 L384 214 L452 160 L520 200 L600 170 V330 H0Z" />
+  <path class="mid" d="M0 270 C80 236 140 250 210 226 C290 200 340 246 410 232 C480 218 540 240 600 226 V340 H0Z" />
+  <g class="pines">
+    {pines.map(([x, base, h]) => (
+      <path d={`M${x} ${base - h} L${x + h * 0.3} ${base} H${x - h * 0.3}Z`} />
+    ))}
+  </g>
+  <!-- sedrene kaskade i slap između šuma -->
+  <path class="rock" d="M200 322 L214 292 L246 286 L258 262 L292 256 L330 258 L344 280 L372 288 L390 322Z" />
+  <g class="fall">
+    <path d="M286 262 V320" /><path d="M300 259 V322" /><path d="M314 261 V318" />
+    <path d="M228 294 V318" /><path d="M356 290 V316" />
+  </g>
+  <rect class="water" y="318" width="600" height="142" fill={`url(#${uid}-lake)`} />
+  <g class="ripples">
+    <path d="M60 352 H180" /><path d="M250 368 H400" /><path d="M430 346 H540" /><path d="M110 398 H260" /><path d="M360 414 H520" />
+  </g>
+</svg>
+
+<style>
+  .scape { display: block; width: 100%; height: 100%; }
+  .sky-top { stop-color: color-mix(in srgb, var(--c-primary) 16%, var(--c-surface)); }
+  .sky-bottom { stop-color: var(--c-surface); }
+  .sun { fill: color-mix(in srgb, var(--c-accent) 38%, var(--c-surface)); }
+  .far { fill: color-mix(in srgb, var(--c-primary) 22%, var(--c-surface)); }
+  .mid { fill: color-mix(in srgb, var(--c-primary) 42%, var(--c-surface)); }
+  .pines { fill: color-mix(in srgb, var(--c-text) 78%, var(--c-primary)); }
+  .rock { fill: color-mix(in srgb, var(--c-primary) 58%, var(--c-text)); }
+  .fall { stroke: var(--c-surface); stroke-width: 3; stroke-linecap: round; opacity: 0.8; }
+  .lake-top { stop-color: var(--c-primary); }
+  .lake-bottom { stop-color: color-mix(in srgb, var(--c-primary) 70%, var(--c-text)); }
+  .ripples { stroke: var(--c-surface); stroke-width: 2; stroke-linecap: round; opacity: 0.35; }
+  /* U tamnoj temi je tekst svijetao, pa šumu i vodu gradimo od pozadine */
+  @media (prefers-color-scheme: dark) {
+    .sky-top { stop-color: color-mix(in srgb, var(--c-primary) 22%, var(--c-bg)); }
+    .far { fill: color-mix(in srgb, var(--c-primary) 30%, var(--c-surface)); }
+    .mid { fill: color-mix(in srgb, var(--c-primary) 42%, var(--c-bg)); }
+    .pines { fill: var(--c-bg); }
+    .rock { fill: color-mix(in srgb, var(--c-primary) 20%, var(--c-bg)); }
+    .lake-top { stop-color: color-mix(in srgb, var(--c-primary) 70%, var(--c-bg)); }
+    .lake-bottom { stop-color: color-mix(in srgb, var(--c-primary) 35%, var(--c-bg)); }
+    .fall, .ripples { stroke: var(--c-text); }
+  }
+</style>
