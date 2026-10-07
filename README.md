@@ -5,7 +5,7 @@ napravljena u **Reactu** s alatom **Vite**. Stranica je dvojezična (HR / EN).
 
 ## Pokretanje
 
-Potreban je [Node.js](https://nodejs.org/) 20 ili noviji.
+Potreban je [Node.js](https://nodejs.org/) **22 LTS** (najmanje 20.19). Starije verzije, npr. Node 18, ne rade.
 
 ```bash
 npm install      # jednom, instalira pakete
